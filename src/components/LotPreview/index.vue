@@ -17,9 +17,9 @@
             <p class="price">
                 Current price: {{user.description.price}}
             </p>
-            <a :href="'/lot-details' + user.id" @click.prevent="">
+            <!--<a :href="'/lot-details' + user.id" @click.prevent="">
                 Details >>
-            </a>
+            </a>-->
         </div>
         <div class="author">
             Author: {{user.description.author}}
