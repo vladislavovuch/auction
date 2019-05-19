@@ -1,20 +1,20 @@
 <template>
     <div class="auction_lots" @click="showLotDetails">
-        <auction-lot
+        <lot-preview
                 v-for="(user, index) in $store.state.lotsShortList"
                 :key="index"
                 :user="user"
-        ></auction-lot>
+        ></lot-preview>
 
     </div>
 </template>
 
 <script>
-    import AuctionLot from '../../components/LotPreview'
+    import LotPreview from '../../components/LotPreview'
 
     export default {
         components: {
-            AuctionLot,
+            LotPreview,
         },
         methods: {
             showLotDetails(event) {

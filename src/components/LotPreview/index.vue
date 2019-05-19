@@ -8,15 +8,20 @@
             <!--<img src="../../assets/stages.jpg" :alt="user.img.alt">-->
         </div>
         <div class="description">
-            <h2>
+            <h2 class="lot_name">
                 {{user.description.title}}
             </h2>
             <p class="finish_date">
                 Finish date: {{user.description.finishDate}}
             </p>
-            <p class="price">
-                Current price: {{user.description.price}}
-            </p>
+            <div class="price_wrap">
+                <span class="price_title">
+                    Current price:
+                </span>
+                <span class="price">
+                   {{user.description.price}}
+                </span>
+            </div>
             <!--<a :href="'/lot-details' + user.id" @click.prevent="">
                 Details >>
             </a>-->
@@ -62,27 +67,20 @@
     .lot_preview {
         width: 100%;
         max-width: 300px;
-        /*border: 1px solid black;*/
+        margin: 1.3rem .8rem 0;
+        border: 1px solid #cacaca;
         display: flex;
-        border-top: 1px solid #ededed;
-        border-bottom: 1px solid #ededed;
-        border-right: 1px solid #ededed;
         padding: 1rem;
         flex-direction: column;
-        /*margin: .1rem .1rem 0;*/
-        position: relative;
         justify-content: center;
-        -webkit-box-shadow: 1px 1px #000;
-        -moz-box-shadow: 1px 1px #000;
-        box-shadow: 1px 1px 5px #000;
+        transition: .3s;
 
         &:hover {
             cursor: pointer;
-
-            .author {
-                /*display: block;*/
-                opacity: 1;
-            }
+            border-color: #89c202;
+            -webkit-box-shadow: 0px 0px 13px 0px #a8a8a8;
+            -moz-box-shadow: 0px 0px 13px 0px #a8a8a8;
+            box-shadow: 0px 0px 13px 0px #a8a8a8;
 
             .lot_image {
                 img {
@@ -114,38 +112,51 @@
     .description {
         width: 100%;
         margin-top: 1rem;
-
-        h2 {
-            line-height: 1.5em;
-            clear: both;
-        }
-
-        p {
-            text-align: left;
-            line-height: 1.5em;
-            padding-left: 2rem;
-            clear: both;
-        }
-
-        a {
-            float: right;
-        }
     }
 
+
+    .lot_name {
+        line-height: 1.5em;
+        color: #2c2c2c;
+    }
+
+    .finish_date {
+        text-align: center;
+        line-height: 1.5em;
+        color: #2c2c2c;
+    }
+
+    .price__wrap {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .price_title {
+        color: #b5b5b5;
+        font-size: 17px;
+        font-weight: 400;
+        margin-right: 14px;
+    }
+
+    .price {
+        color: #89c202;
+        font-size: 22px;
+        font-weight: 400;
+    }
+
+
+
+
     .author {
-        position: absolute;
-        bottom: -2rem;
         /*display: none;*/
         padding: 1rem 0;
         text-align: center;
-        width: calc(100% - 2rem);
+        /*width: 100%;*/
+        // margin-left: -1rem;
         z-index: 2;
-        opacity: 0;
-        -webkit-transition: all .3s;
-        -moz-transition: all .3s;
-        -ms-transition: all .3s;
-        -o-transition: all .3s;
-        transition: all .3s;
+        /*opacity: 0;*/
         background-color: #fff;
     }
 </style>
