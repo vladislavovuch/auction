@@ -4,14 +4,19 @@
             <slot></slot>
         </p>
         <div class="entry-field">
-            <input type="text">
+            <input :type="type">
         </div>
     </label>
 </template>
 
 <script>
     export default {
-        name: "index"
+        props: {
+            type: {
+                type: String,
+                default: 'text'
+            }
+        }
     }
 </script>
 
@@ -33,6 +38,8 @@
             display: flex;
             justify-content: flex-start;
             input {
+                width: 100%;
+                max-width: 17rem;
                 font-size: 1.2rem;
                 padding: .1rem;
                 line-height: 1em;

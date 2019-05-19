@@ -1,5 +1,5 @@
 <template>
-    <label for="">
+    <label for="" class="base-field">
         <p>
             <slot></slot>
         </p>
@@ -23,7 +23,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-
+        margin-top: 1rem;
         p {
             width: 100%;
             text-align: right;
@@ -36,11 +36,14 @@
             justify-content: flex-start;
 
             textarea {
+                width: 100%;
+                max-width: 17rem;
                 font-size: 1rem;
                 padding: .1rem;
                 /*line-height: 1em;*/
                 height: 5rem;
                 max-height: 10rem;
+                min-height: 2rem;
             }
         }
 
