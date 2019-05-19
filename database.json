@@ -24,7 +24,7 @@
             },
             "description":"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem quos rerum similique veniam! Ab, delectus dolores facilis id laudantium omnis repellat rerum sapiente sint sit soluta, totam unde vero voluptatem?",
             "price": 11,
-            "min_rate": 10,
+            "min_step": 10,
             "finishDate": "20/10/2019 20:00",
             "author": {
                 "name": "Jon Show",
@@ -43,7 +43,7 @@
             },
             "description":"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem quos rerum similique veniam! Ab, delectus dolores facilis id laudantium omnis repellat rerum sapiente sint sit soluta, totam unde vero voluptatem?",
             "price": 11,
-            "min_rate": 10,
+            "min_step": 10,
             "finishDate": "20/10/2019 20:00",
             "author": {
                 "name": "Jon Show",

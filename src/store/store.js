@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-Vue.use(Vuex)
+Vue.use(Vuex);
+
+import urlsMapping from './UrlsMapping'
 
 export default new Vuex.Store({
     strict: process.env.NODE_ENV !== 'production',
@@ -20,7 +22,6 @@ export default new Vuex.Store({
                     price: 11,
                     author: 'Jon Show',
                 }
-
             },
             {
                 id: '2',
@@ -34,7 +35,6 @@ export default new Vuex.Store({
                     price: 11,
                     author: 'Jon Show',
                 }
-
             },
             {
                 id: '3',
@@ -48,7 +48,6 @@ export default new Vuex.Store({
                     price: 11,
                     author: 'Jon Show',
                 }
-
             },
             {
                 id: '4',
@@ -134,37 +133,40 @@ export default new Vuex.Store({
                 }
             },
         ],
-        lots: [
-            {
-                id: '1',
-                title: 'Lot number 1',
-                img: {
-                    url: 'static/true_story.jpg',
-                    alt: 'lot number 1',
-                },
-                description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n' +
-                    '                Architecto debitis dicta excepturi explicabo iusto nulla quo\n' +
-                    '                rerum veritatis voluptas. Blanditiis deserunt doloremque,\n' +
-                    '                fuga fugiat inventore modi sint! Culpa delectus doloribus et explicabo\n' +
-                    '                neque nisi quaerat repudiandae veritatis! Laboriosam, magnam quae!\n' +
-                    '                Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n' +
-                    '                Adipisci cum eos quibusdam quod sapiente vel? Consequuntur in quae quidem vel.\n' +
-                    '            ',
-                price: 11,
-                min_rate: 10,
-
-            }
-        ]
+        lots: []
     },
     getters: {
-        getLot(state, id) {
-            state
+        getLot: state => id => {
+            return state.lots.find(lot => lot.id === id);
+        },
+    },
+    mutations: {
+        addLot(state, payload) {
+            state.lots.push(payload);
         }
     },
-    mutations: {},
     actions: {
         getLot(context, payload) {
-            window.fetch()
+            window.fetch(urlsMapping.getLotsUrl(payload))
+                .then(response => {
+                    console.log(response);
+                    if (response.status !== 200) {
+                        throw new Error();
+                    }
+                    return response.json();
+                })
+                .then(response => {
+                    console.log(response);
+                    // if get empty array from server
+                    if (response.length === 0) {
+                        throw new Error('There isnt such lot on server');
+                    }
+                    context.commit('addLot', response[0])
+                })
+                .catch(err => {
+                    console.warn(err);
+
+                })
         }
     }
 })

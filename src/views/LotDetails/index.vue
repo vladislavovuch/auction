@@ -1,5 +1,5 @@
 <template>
-    <div class="lot-details">
+    <div class="lot-details" v-if="lot">
         <!--images slider-->
         <div class="img-slider">
             <img src="../../assets/stages.jpg" alt="lot main picture">
@@ -12,17 +12,27 @@
             Current price: {{lot.price}}
         </div>
         <form @submit.prevent="">
-            <div class="rate">
-                <p class="">
-                    Make your rate:
+            <div class="rate-wrap">
+                <p>
+                    minimal rate - {{minimalRate}}
                 </p>
-                <div class="input-wrap">
-                    <p>
-                        minimal rate - {{lot.min_rate}}
+                <div class="rate">
+                    <p class="">
+                        Make your rate:
                     </p>
-                    <input type="number">
+                    <div class="input-wrap">
+                        <input
+                                type="number"
+                                :value="rate"
+                                @input="enterRate"
+                                @blur="validateRate($event.target.value)"
+                                :class="[isValid ? '' : 'invalid-input']"
+                        >
+                    </div>
                 </div>
-
+                <p class="error-msg rate-error" v-if="!isValid">
+                    This field is invalid
+                </p>
             </div>
             <div class="make-rate">
                 <button type="submit">
@@ -53,30 +63,55 @@
         data() {
             return {
                 id: null,
+                rate: '',
+                isValid: true,
             }
         },
-        /*props: {
-            lot: {
-                type: Object,
-                require: true,
+        methods: {
+            enterRate(event) {
+                this.rate = event.target.value;
             },
-        },*/
+            validateRate(value) {
+                // make invalid field
+                this.isValid = !(value < this.minimalRate);
+                return this.isValid;
+            },
+            sumbitRate() {
+                if (this.validateRate(this.rate)) {
+                    // make request and save data
+                }
+            }
+        },
         created() {
             console.log("Lot details created");
         },
-        beforeCreate(next) {
-            console.log('Before created lot details')
+        beforeCreate() {
+            console.log('Before created lot details');
+        },
+        beforeMount() {
+            console.log('Before mount');
+        },
+        mounted() {
+            console.log('Mounted');
         },
         beforeRouteEnter(to, from, next) {
-            console.log("Before route enter");
             next(vm => {
-                this.id = to.params.id;
+                console.log("Before route enter");
+                vm.id = to.params.id;
+                // if such lot isnt in store already
+                if (vm.lot === undefined) {
+                    // make request and get such lot
+                    vm.$store.dispatch('getLot', vm.id)
+                }
             });
         },
         computed: {
             lot() {
                 return this.$store.getters.getLot(this.id);
-            }
+            },
+            minimalRate() {
+                return +this.lot.min_step + +this.lot.price;
+            },
         }
     }
 </script>
@@ -111,35 +146,54 @@
         margin-top: 1rem;
     }
 
-    .rate {
+    .rate-wrap {
         margin-top: 1rem;
+        width: 100%;
+        clear: both;
+        >p {
+            width: 100%;
+            padding-left: 50%;
+            text-align: left;
+            /*float: right;*/
+            /*padding-left: 1rem;*/
+            margin-left: .5rem;
+        }
+    }
+
+    .rate {
         width: 100%;
         display: flex;
         justify-content: center;
-        align-items: flex-end;
-        clear: both;
+        align-items: center;
 
         p {
             width: 100%;
             margin-right: 1rem;
             text-align: right;
         }
+
+        input {
+             font-size: 1.2rem;
+             height: 1.2rem;
+             max-width: 300px;
+             padding: .15rem;
+         }
+
     }
 
     .input-wrap {
         width: 100%;
-        float: left;
+        display: flex;
+        justify-content: flex-start;
+    }
 
-        p {
-            text-align: left;
-            font-size: .8rem;
-        }
+    .invalid-input {
+        border-color: #dc3545;
+    }
 
-        input {
-            float: left;
-            font-size: 1.1rem;
-            height: 1.4rem;
-        }
+    .error-msg {
+        color: #dc3545;
+        font-size: .9rem;
     }
 
     .make-rate {
