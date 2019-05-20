@@ -54,9 +54,11 @@
                 Lots number:
             </base-input>
 
-            <base-select>
-                Select delivery service
-            </base-select>
+            <!--<base-select>-->
+                <!--Select delivery service-->
+            <!--</base-select>-->
+            <base-multilist>
+            </base-multilist>
 
             <base-textarea>
                 Detail lot description
@@ -87,13 +89,15 @@
     import BaseButton from '../../components/BaseComponents/BaseButton'
     import BaseSelect from '../../components/BaseComponents/BaseSelect'
     import BaseTextarea from '../../components/BaseComponents/BaseTextarea'
+    import BaseMultilist from '../../components/BaseComponents/BaseMultilist'
 
     export default {
         components: {
             BaseInput,
             BaseButton,
             BaseSelect,
-            BaseTextarea
+            BaseTextarea,
+            BaseMultilist,
         },
         data() {
             return {
