@@ -73,23 +73,29 @@
     }
 
     .multilist-enter {
-        height: 0;
-        opacity: 0;
+        /*height: 0;*/
+        /*opacity: 0;*/
+        transform: scaleY(0);
     }
     .multilist-enter-to {
-        height: 100px;
-        opacity: 1;
+        transform: scaleY(1);
+        /*opacity: 1;*/
     }
     .multilist-leave {
-        height: 100px;
+        /*height: 100px;*/
     }
     .multilist-leave-to {
         height: 0;
         opacity: 0;
+        transform: translateX(50px);
     }
 
     .multilist-enter-active {
-        transition: all .4s;
+        /*transition: all .4s;*/
+        transform-origin:top;
+        overflow: hidden;
+        transition:transform 0.3s ease-out; // note that we're transitioning transform, not height!
+        height:auto;
     }
 
     .multilist-leave-active {
