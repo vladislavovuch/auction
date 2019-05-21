@@ -1,21 +1,24 @@
 <template>
     <div class="base-multilist">
         <div class="selected-items">
-
+            <button @click="toggle = !toggle">Toggle</button>
         </div>
-        <ul class="multiselect">
-            <li v-for="(elem, index) in list" :key="index">
-                <h5 v-if="elem.subtitle">
-                    {{elem.subtitle}}
-                </h5>
-                <label class="list-item">
-                    <input type="checkbox" v-model="elem.selected">
-                    <p>
-                        {{elem.text}}
-                    </p>
-                </label>
-            </li>
-        </ul>
+        <transition name="multilist">
+            <ul class="multiselect" v-if="toggle">
+                <li v-for="(elem, index) in list" :key="index">
+                    <h5 v-if="elem.subtitle">
+                        {{elem.subtitle}}
+                    </h5>
+                    <label class="list-item">
+                        <input type="checkbox" v-model="elem.selected">
+                        <p>
+                            {{elem.text}}
+                        </p>
+                    </label>
+                </li>
+            </ul>
+        </transition>
+
     </div>
 </template>
 
@@ -23,6 +26,7 @@
     export default {
         data() {
             return {
+                toggle: false,
                 list: [
                     {
                         text: 'Нова пошта',
@@ -51,6 +55,8 @@
         width: 100%;
         display: flex;
         justify-content: center;
+        flex-direction: column;
+        align-items: center;
     }
 
     .selected-items {
@@ -64,6 +70,34 @@
     .list-item {
         display: flex;
 
+    }
+
+    .multilist-enter {
+        height: 0;
+        opacity: 0;
+    }
+    .multilist-enter-to {
+        height: 100px;
+        opacity: 1;
+    }
+    .multilist-leave {
+        height: 100px;
+    }
+    .multilist-leave-to {
+        height: 0;
+        opacity: 0;
+    }
+
+    .multilist-enter-active {
+        transition: all .4s;
+    }
+
+    .multilist-leave-active {
+        /*-webkit-transition: prop time;*/
+        /*-moz-transition: prop time;*/
+        /*-ms-transition: prop time;*/
+        /*-o-transition: prop time;*/
+        transition: all .4s;
     }
 
 </style>
