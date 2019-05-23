@@ -55,7 +55,7 @@
             </base-input>
 
             <!--<base-select>-->
-                <!--Select delivery service-->
+            <!--Select delivery service-->
             <!--</base-select>-->
             <base-multilist>
             </base-multilist>
@@ -176,7 +176,7 @@
     }
 
     .add-lot {
-        width: 100%;
+        width: calc(100% - 2rem);
         padding: 1rem;
     }
 
@@ -245,7 +245,7 @@
 
             img {
                 /*width: calc(100% - 2px);*/
-                width:auto;
+                width: auto;
                 max-width: calc(100% - 2px);
                 height: auto;
                 object-fit: contain;
