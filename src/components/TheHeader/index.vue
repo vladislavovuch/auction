@@ -134,12 +134,10 @@
             object-fit: contain;
         }
     }
-    .hide_list {
-        height: 0 !important;
-        transition: .5s;
-    }
+
     .menu_list {
         transition: 1s;
+        transform-origin:top;
         @extend %standart;
         display: flex;
         justify-content: flex-end;
@@ -302,7 +300,8 @@
         .menu_list {
             overflow: hidden;
             margin: 0;
-            height: calc(180px);
+            transform: scaleY(1);
+            /*height: calc(180px);*/
             background-color: #fff;
             position: absolute;
             width: 100%;
@@ -313,9 +312,15 @@
                 flex-direction: column;
                 align-items: center;
             }
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
         }
         .my_ham {
             display: block;
+        }
+        .hide_list {
+            transform: scaleY(0) !important;
+            transform-origin:top;
+            /*transition: .5s;*/
         }
     }
 
