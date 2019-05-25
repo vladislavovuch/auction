@@ -6,16 +6,17 @@
                 <router-view/>
             </div>
         </main>
-
+        <loading-indicator></loading-indicator>
     </div>
 </template>
 
 <script>
     import TheHeader from './components/TheHeader'
-
+    import LoadingIndicator from './components/LoadingIndicator'
     export default {
         components: {
             TheHeader,
+            LoadingIndicator
         },
     }
 </script>

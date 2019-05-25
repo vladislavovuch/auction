@@ -4,7 +4,7 @@
             <slot></slot>
         </p>
         <div class="entry-field">
-            <input :type="type">
+            <input :type="type" :value="value" @input="inputData" />
         </div>
     </label>
 </template>
@@ -15,6 +15,15 @@
             type: {
                 type: String,
                 default: 'text'
+            },
+            value: {
+                required: true,
+            }
+        },
+        methods: {
+            inputData(event) {
+                // this.value = event.target.value;
+                this.$emit('input', event.target.value)
             }
         }
     }

@@ -1,20 +1,19 @@
 <template>
     <div class="add-lot">
         <h2>Add your lot here</h2>
-        <form @submit.prevent class="photo">
+        <form @submit.prevent class="photo" @input="">
             <p>Upload lot`s photos</p>
+            <!--make another component-->
             <div class="img-upload">
                  <span class="upload-btn" :title="`Max image - ${imageListMaxSize}`">
                      Upload image
                      <input id="file" type="file" accept="image/*" @input="uploadPhoto">
                 </span>
-                <!--input for file name-->
-                <!--<input type="text" readonly>-->
             </div>
             <div class="images-list">
-                <ul @click="removePhoto" :draggable="true">
+                <ul @click="removePhoto">
                     <li
-                            v-for="(elem, index) of imageList"
+                            v-for="(elem, index) of lot.imagesList"
                             :key="index"
                             :id="index"
                             class="img-preview"
@@ -35,48 +34,48 @@
                 </ul>
             </div>
 
-            <base-input>
+            <base-input v-model="lot.title">
                 Lot name:
             </base-input>
 
-            <base-input
-                    type="number"
-            >
+            <base-input type="number" v-model="lot.price">
                 Start price:
             </base-input>
-            <base-input>
+
+            <base-input type="number" v-model="lot.minStep">
                 Minimal rate step
             </base-input>
-            <base-input>
+            <base-input type="date" v-model="lot.finishDate">
                 Finish date:
             </base-input>
-            <base-input>
+            <base-input type="number" v-model="lot.lotsNumber">
                 Lots number:
             </base-input>
 
-            <!--<base-select>-->
-                <!--Select delivery service-->
-            <!--</base-select>-->
-            <base-multilist>
+            <base-multilist
+                    class="base-multiselect"
+                    :list="postsList"
+                    @select-items="selectPosts"
+            >
             </base-multilist>
 
-            <base-textarea>
+            <base-textarea v-model="lot.description">
                 Detail lot description
             </base-textarea>
 
             <!--author contacts ?? auto substitution-->
-            <base-input>
+            <base-input v-model="lot.author.name">
                 Author name:
             </base-input>
-            <base-input>
+            <base-input v-model="lot.author.contacts.phoneNumber">
                 Author telephone:
             </base-input>
-            <base-input>
+            <base-input v-model="lot.author.contacts.email">
                 Author email:
             </base-input>
 
             <div class="public-lot">
-                <base-button>
+                <base-button @click="publicLot">
                     Public lot
                 </base-button>
             </div>
@@ -101,20 +100,49 @@
         },
         data() {
             return {
-                imageList: [],
+                id: null,
                 imageListMaxSize: 5,
+                postsList: [
+                    'Нова пошта',
+                    'Укр пошта',
+                    'In time',
+                    'Alliexpress',
+                ],
+                lot: {
+                    title: "",
+                    imagesList: [],
+                    description: '',
+                    price: 0,
+                    minStep: 0,
+                    finishDate: '',
+                    lotsNumber: 1,
+                    author: {
+                        name: "Jon Show",
+                        contacts: {
+                            email: "12345crazysailer@gmail.com",
+                            phoneNumber: "+380969913199"
+                        }
+                    }
+                },
             }
         },
         methods: {
+            publicLot() {
+                console.log('Public lot');
+                this.$store.dispatch('createNewLot', this.lot);
+            },
+            selectPosts(e) {
+                console.log(e);
+            },
             uploadPhoto(event) {
                 if (this.isFullImageList) {
                     //show notification
-                    this.showNotification(`You cant upload more than ${this.imageListMaxSize} images`);
+                    const msg = `You cant upload more than ${this.imageListMaxSize} images`;
+                    this.showNotification(msg);
                     return;
                 }
 
                 const target = event.target;
-                // debugger;
                 if (!target.files.length) {
                     return;
                 }
@@ -122,50 +150,37 @@
                 reader.onload = () => {
                     let dataUrl = reader.result;
                     // Vue reactivity doesnt support Set
-                    if (this.imageList.includes(dataUrl) === false) {
-                        this.imageList.push(dataUrl);
+                    if (this.lot.imagesList.includes(dataUrl) === false) {
+                        this.lot.imagesList.push(dataUrl);
                     } else {
                         // show notification
                         this.showNotification("You have already selected this image");
                     }
-
-                    // this.imageList.add(dataUrl);
-                    // this.imageList = new Set(this.imageList);
-                }
-                reader.readAsDataURL(target.files[0])
+                };
+                reader.readAsDataURL(target.files[0]);
             },
             removePhoto(event) {
                 const currentTarget = event.currentTarget;
-                let target = event.target;
-                while (target !== currentTarget) {
-                    //find li.img-preview
-                    if (target.classList.contains('img-cancel')) {
-                        console.log('Find target!');
-                        const index = +target.dataset.index;
-                        // this.imageList.delete(index);
-                        // this.imageList = this.imageList;
-                        this.imageList.splice(index, 1)
-                        // this.imageList = [...this.imageList];
-                    }
-                    target = target.parentNode;
+                const target = event.target;
+                const selector = '.img-cancel';
+                const btn = this.$closest(target, selector, currentTarget);
+                if (btn && btn.dataset.index) {
+                    const index = btn.dataset.index;
+                    this.lot.imagesList.splice(index, 1);
                 }
             },
             showNotification(msg) {
                 alert(msg);
             }
         },
-        mounted() {
-            // this.imageList = new Set();
-        },
         computed: {
-            // imageArray() {
-            //     return Array.from(this.imageList)
-            // },
             isFullImageList() {
-                return this.imageList.length === this.imageListMaxSize;
+                return this.lot.imagesList.length === this.imageListMaxSize;
             }
+        },
+        created() {
+            this.lot.id = this.$uuid();
         }
-
     }
 </script>
 
@@ -176,7 +191,7 @@
     }
 
     .add-lot {
-        width: 100%;
+        width: calc(100% - 2rem);
         padding: 1rem;
     }
 
@@ -218,7 +233,22 @@
             background: #fff;
             cursor: inherit;
             display: block;
+            -webkit-transition: all .3s;
+            -moz-transition: all .3s;
+            -ms-transition: all .3s;
+            -o-transition: all .3s;
+            transition: all .3s;
         }
+
+        &:hover {
+            background-color: #ebebeb;
+        }
+    }
+
+    .base-multiselect {
+        max-width: 500px;
+        margin: 0 auto;
+        margin-top: 1rem;
     }
 
     .images-list {
@@ -245,7 +275,7 @@
 
             img {
                 /*width: calc(100% - 2px);*/
-                width:auto;
+                width: auto;
                 max-width: calc(100% - 2px);
                 height: auto;
                 object-fit: contain;
