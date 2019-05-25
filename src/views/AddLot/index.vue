@@ -57,7 +57,11 @@
             <!--<base-select>-->
             <!--Select delivery service-->
             <!--</base-select>-->
-            <base-multilist class="base-multiselect">
+            <base-multilist
+                    class="base-multiselect"
+                    :list="postsList"
+                    @select-items="selectPosts"
+            >
             </base-multilist>
 
             <base-textarea>

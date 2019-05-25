@@ -30,9 +30,9 @@
                     </button>
                 </span>
             </div>
-            <button class="btn-toggle" @click="toggle = !toggle">
+            <button class="btn-toggle" @click="toggleList">
                 <svg
-                        :class="{'opened-list': toggle}"
+                        :class="{'opened-list': isShownList}"
                         aria-hidden="true"
                         data-prefix="fas"
                         data-icon="angle-down"
@@ -50,13 +50,10 @@
             </button>
         </div>
         <transition name="multilist">
-            <ul class="multiselect" v-if="toggle">
-                <li v-for="(elem, index) in list" :key="index" class="list-item">
-                    <!--<h5 v-if="elem.subtitle">-->
-                        <!--{{elem.subtitle}}-->
-                    <!--</h5>-->
+            <ul class="multiselect" v-if="isShownList">
+                <li v-for="(elem, index) in multiList" :key="index" class="list-item">
                     <label class="list-item-label">
-                        <input type="checkbox" v-model="elem.selected">
+                        <input type="checkbox" :checked="elem.selected" @change="selectItem(index)">
                         <p>
                             {{elem.text}}
                         </p>
@@ -72,35 +69,36 @@
     export default {
         data() {
             return {
-                toggle: false,
-                list: [
-                    {
-                        text: 'Нова пошта',
-                        selected: false,
-                    },
-                    {
-                        text: 'Укр пошта',
-                        selected: false,
-                    },
-                    {
-                        text: 'In time',
-                        selected: false,
-                    },
-                    {
-                        text: 'Alliexpress',
-                        selected: false,
-                    },
-                ]
+                isShownList: false,
+                multiList: null,
             }
+        },
+        props: {
+            /**
+             * Get strings array
+             */
+            list: {
+                required: true,
+                type: Array,
+            },
         },
         computed: {
             selectedItems() {
-                return this.list.filter(item => {
+                return this.multiList.filter(item => {
                     return item.selected;
-                })
+                });
+            },
+            /**
+             * sendedItems - Array with Strings items
+             */
+            sendedItems() {
+                return this.selectedItems.map(item => item.text);
             }
         },
         methods: {
+            toggleList() {
+                this.isShownList = !this.isShownList;
+            },
             removeSelectedItem(event) {
                 const target = event.target;
                 const currentTarget = event.currentTarget;
@@ -111,8 +109,28 @@
                 }
             },
             unselectListItem(index) {
+                console.log('Unselect ', index);
                 this.$set(this.selectedItems[index], 'selected', false);
+                this.saveSelectedItems();
+            },
+            selectItem(index) {
+                this.$set(this.multiList[index], 'selected', !this.multiList[index].selected);
+                this.saveSelectedItems();
+            },
+            saveSelectedItems() {
+                this.$emit('select-items', this.sendedItems);
             }
+        },
+        created() {
+            /**
+             * array with parent text and structure for selecting and unselecting elements
+             */
+            this.multiList = this.list.map(elem => {
+                return {
+                    text: elem,
+                    selected: false,
+                }
+            });
         }
     }
 </script>
