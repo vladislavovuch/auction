@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import AuctionLots from './views/AuctionLots'
 import LotDetails from './views/LotDetails'
+import AddLot from './views/AddLot'
+import BaseSlider from './views/Slider'
 
 Vue.use(Router)
 
@@ -29,6 +31,14 @@ export default new Router({
         {
             path: '/lot-detailes-:id',
             component: LotDetails,
+        },
+        {
+            path: '/add-lot',
+            component: AddLot,
+        },
+        {
+            path: '/test-slider',
+            component: BaseSlider,
         }
 
     ]
