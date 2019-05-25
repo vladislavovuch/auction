@@ -57,7 +57,7 @@
             <!--<base-select>-->
             <!--Select delivery service-->
             <!--</base-select>-->
-            <base-multilist>
+            <base-multilist class="base-multiselect">
             </base-multilist>
 
             <base-textarea>
@@ -218,7 +218,22 @@
             background: #fff;
             cursor: inherit;
             display: block;
+            -webkit-transition: all .3s;
+            -moz-transition: all .3s;
+            -ms-transition: all .3s;
+            -o-transition: all .3s;
+            transition: all .3s;
         }
+
+        &:hover {
+            background-color: #ebebeb;
+        }
+    }
+
+    .base-multiselect {
+        max-width: 500px;
+        margin: 0 auto;
+        margin-top: 1rem;
     }
 
     .images-list {
