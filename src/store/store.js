@@ -1,137 +1,22 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import axios from 'axios'
+
 Vue.use(Vuex);
+
+import LoadingIndicator from './modules/LoadingIndicator'
 
 import urlsMapping from './UrlsMapping'
 
 export default new Vuex.Store({
     strict: process.env.NODE_ENV !== 'production',
+    modules: [
+        LoadingIndicator,
+    ],
     state: {
         BASE_URL: 'http://localhost:3000',
         lotsShortList: [
-            {
-                id: '1',
-                img: {
-                    url: 'static/brandson.jpg',
-                    alt: 'Lot`s image - ancient coin'
-                },
-                description: {
-                    title: 'Lot number 1',
-                    finishDate: '20/10/2019 20:00',
-                    price: 11,
-                    author: 'Jon Show',
-                }
-            },
-            {
-                id: '2',
-                img: {
-                    url: 'static/brandson.jpg',
-                    alt: 'Lot`s image - ancient coin'
-                },
-                description: {
-                    title: 'Lot number 1',
-                    finishDate: '20/10/2019 20:00',
-                    price: 11,
-                    author: 'Jon Show',
-                }
-            },
-            {
-                id: '3',
-                img: {
-                    url: 'static/brandson.jpg',
-                    alt: 'Lot`s image - ancient coin'
-                },
-                description: {
-                    title: 'Lot number 1',
-                    finishDate: '20/10/2019 20:00',
-                    price: 11,
-                    author: 'Jon Show',
-                }
-            },
-            {
-                id: '4',
-                img: {
-                    url: 'static/true_story.jpg',
-                    alt: 'Lot`s image - ancient coin'
-                },
-                description: {
-                    title: 'Lot number 1',
-                    finishDate: '20/10/2019 20:00',
-                    price: 11,
-                    author: 'Jon Show',
-                }
-
-            },
-            {
-                id: '5',
-                img: {
-                    url: 'static/stages.jpg',
-                    alt: 'Lot`s image - ancient coin'
-                },
-                description: {
-                    title: 'Lot number 1',
-                    finishDate: '20/10/2019 20:00',
-                    price: 11,
-                    author: 'Jon Show',
-                }
-
-            },
-            {
-                id: '6',
-                img: {
-                    url: 'static/stages.jpg',
-                    alt: 'Lot`s image - ancient coin'
-                },
-                description: {
-                    title: 'Lot number 1',
-                    finishDate: '20/10/2019 20:00',
-                    price: 11,
-                    author: 'Jon Show',
-                }
-
-            },
-            {
-                id: '7',
-                img: {
-                    url: 'static/true_story.jpg',
-                    alt: 'Lot`s image - ancient coin'
-                },
-                description: {
-                    title: 'Lot number 1',
-                    finishDate: '20/10/2019 20:00',
-                    price: 11,
-                    author: 'Jon Show',
-                }
-
-            },
-            {
-                id: '8',
-                img: {
-                    url: 'static/true_story.jpg',
-                    alt: 'Lot`s image - ancient coin'
-                },
-                description: {
-                    title: 'Lot number 1',
-                    finishDate: '20/10/2019 20:00',
-                    price: 11,
-                    author: 'Jon Show',
-                }
-
-            },
-            {
-                id: '9',
-                img: {
-                    url: 'static/stages.jpg',
-                    alt: 'Lot`s image - ancient coin'
-                },
-                description: {
-                    title: 'Lot number 1',
-                    finishDate: '20/10/2019 20:00',
-                    price: 11,
-                    author: 'Jon Show',
-                }
-            },
         ],
         lots: []
     },
@@ -161,12 +46,77 @@ export default new Vuex.Store({
                     if (response.length === 0) {
                         throw new Error('There isnt such lot on server');
                     }
-                    context.commit('addLot', response[0])
+                    context.commit('addLot', response[0]);
                 })
                 .catch(err => {
                     console.warn(err);
 
                 })
+        },
+        async createNewLotPreview(context, lot) {
+            const shortListUrl = urlsMapping.lotsPreviewUrl();
+
+            const lotPreview = await context.dispatch('getLotPreviewInfo', lot);
+
+            return axios.post(shortListUrl, lotPreview)
+                .then(response => {
+                    console.log(response);
+                    if (response.status !== 201) {
+                        throw new Error(response.statusText);
+                    }
+                })
+                .catch(err => {
+                    console.warn(err);
+                    throw new Error('server error');
+                })
+        },
+        createNewLotDetails(context, lot) {
+            const url = urlsMapping.lotsDetailsUrl();
+            const options = {
+                'Access-Control-Allow-Origin': '*'
+            };
+            return axios.post(url, lot, options)
+                .then(response => {
+                    console.log(response);
+                    if (response.status !== 201) {
+                        throw new Error(response.statusText);
+                    }
+                })
+                .catch(err => {
+                    console.warn(err);
+                    throw new Error('server error');
+                });
+        },
+        /**
+         * because of serverless arcticecture I have to make 2 requests -
+         * 1. create lot in lots ShortList (for preview)
+         * 2. create lot in lots Details list with details info
+         */
+        async createNewLot(context, lot) {
+            this.commit('toggleIndicator', 'We process the entered data');
+            try {
+                await Promise.all([context.dispatch('createNewLotDetails', lot), context.dispatch('createNewLotPreview', lot)]);
+            } catch (e) {
+                //show msg that server failed
+                console.log('server failed');
+            }
+            // stop indicator
+            this.commit('toggleIndicator');
+            console.log('After all requests');
+
+
+
+        },
+        getLotPreviewInfo(context, lot) {
+            const preview = {
+                id: lot.id,
+                img: lot.imagesList[0],
+                title: lot.title,
+                finishDate: lot.finishDate,
+                price: lot.price,
+                author: lot.author,
+            }
+            return preview;
         }
     }
 })

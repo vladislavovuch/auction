@@ -2,10 +2,9 @@
     <div class="lot-details" v-if="lot">
         <!--images slider-->
         <div class="img-slider">
-            <img src="../../assets/stages.jpg" alt="lot main picture">
+            <img :src="lot.img.url" alt="lot main picture">
         </div>
         <h2>
-            Lot number 1
             {{lot.title}}
         </h2>
         <div class="price">
@@ -115,7 +114,7 @@
                 return this.$store.getters.getLot(this.id);
             },
             minimalRate() {
-                return +this.lot.min_step + +this.lot.price;
+                return +this.lot.minStep + +this.lot.price;
             },
         }
     }

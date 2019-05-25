@@ -4,8 +4,7 @@
             <slot></slot>
         </p>
         <div class="entry-field">
-            <textarea name="" id="" cols="30" rows="10">
-
+            <textarea :value="value" @input="$emit('input', $event.target.value)">
             </textarea>
         </div>
     </label>
@@ -13,7 +12,13 @@
 
 <script>
     export default {
-        name: "index"
+        props: {
+            value: {
+                type: String,
+                required: true,
+            },
+        },
+
     }
 </script>
 
