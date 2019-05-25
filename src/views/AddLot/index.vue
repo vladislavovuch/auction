@@ -103,9 +103,18 @@
             return {
                 imageList: [],
                 imageListMaxSize: 5,
+                postsList: [
+                    'Нова пошта',
+                    'Укр пошта',
+                    'In time',
+                    'Alliexpress',
+                ],
             }
         },
         methods: {
+            selectPosts(e) {
+                console.log(e);
+            },
             uploadPhoto(event) {
                 if (this.isFullImageList) {
                     //show notification
@@ -114,7 +123,6 @@
                 }
 
                 const target = event.target;
-                // debugger;
                 if (!target.files.length) {
                     return;
                 }
@@ -128,26 +136,17 @@
                         // show notification
                         this.showNotification("You have already selected this image");
                     }
-
-                    // this.imageList.add(dataUrl);
-                    // this.imageList = new Set(this.imageList);
-                }
+                };
                 reader.readAsDataURL(target.files[0])
             },
             removePhoto(event) {
                 const currentTarget = event.currentTarget;
-                let target = event.target;
-                while (target !== currentTarget) {
-                    //find li.img-preview
-                    if (target.classList.contains('img-cancel')) {
-                        console.log('Find target!');
-                        const index = +target.dataset.index;
-                        // this.imageList.delete(index);
-                        // this.imageList = this.imageList;
-                        this.imageList.splice(index, 1)
-                        // this.imageList = [...this.imageList];
-                    }
-                    target = target.parentNode;
+                const target = event.target;
+                const selector = '.img-cancel';
+                const btn = this.$closest(target, selector, currentTarget);
+                if (btn && btn.dataset.index) {
+                    const index = btn.dataset.index;
+                    this.imageList.splice(index, 1)
                 }
             },
             showNotification(msg) {
