@@ -6,6 +6,7 @@ import axios from 'axios'
 Vue.use(Vuex);
 
 import LoadingIndicator from './modules/LoadingIndicator'
+import ModalWindow from './modules/ModalWindow'
 
 import urlsMapping from './UrlsMapping'
 
@@ -13,6 +14,7 @@ export default new Vuex.Store({
     strict: process.env.NODE_ENV !== 'production',
     modules: [
         LoadingIndicator,
+        ModalWindow,
     ],
     state: {
         BASE_URL: 'http://localhost:3000',
@@ -61,7 +63,7 @@ export default new Vuex.Store({
             return axios.post(shortListUrl, lotPreview)
                 .then(response => {
                     console.log(response);
-                    if (response.status !== 201) {
+                    if (response.status >= 200 && response.status < 300) {
                         throw new Error(response.statusText);
                     }
                 })
@@ -75,10 +77,10 @@ export default new Vuex.Store({
             const options = {
                 'Access-Control-Allow-Origin': '*'
             };
-            return axios.post(url, lot, options)
+            return axios.post(url, lot)
                 .then(response => {
                     console.log(response);
-                    if (response.status !== 201) {
+                    if (response.status >= 200 && response.status < 300) {
                         throw new Error(response.statusText);
                     }
                 })
@@ -96,16 +98,14 @@ export default new Vuex.Store({
             this.commit('toggleIndicator', 'We process the entered data');
             try {
                 await Promise.all([context.dispatch('createNewLotDetails', lot), context.dispatch('createNewLotPreview', lot)]);
+                console.log('if all is fine');
+                context.commit('toggleModalWindow', {title: 'Lot successfuly publishment', info: ''});
             } catch (e) {
-                //show msg that server failed
                 console.log('server failed');
+                context.commit('toggleModalWindow', {});
             }
             // stop indicator
             this.commit('toggleIndicator');
-            console.log('After all requests');
-
-
-
         },
         getLotPreviewInfo(context, lot) {
             const preview = {
