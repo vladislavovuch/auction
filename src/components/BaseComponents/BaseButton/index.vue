@@ -13,18 +13,19 @@
         padding: .5rem 2rem;
         font-size: 1.2rem;
         color: #fff;
-        background-color: #007bff;
-        border-color: #007bff;
-        -webkit-border-radius: 1rem;
-        -moz-border-radius: 1rem;
-        border-radius: 1rem;
+        background-color: rgb(65, 184, 131);
+        border: none;
+        /*border-color: #007bff;*/
+        /*border: 1px solid*/
+        /*-webkit-border-radius: 1rem;*/
+        /*-moz-border-radius: 1rem;*/
+        /*border-radius: 1rem;*/
         outline: none;
         cursor: pointer;
         margin-top: 1rem;
 
         &:hover {
-            background-color: #0069d9;
-            border-color: #0062cc;
+            background-color: rgb(59, 165, 117);
         }
 
     }

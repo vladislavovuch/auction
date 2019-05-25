@@ -35,9 +35,9 @@
                 </p>
             </div>
             <div class="make-rate">
-                <button type="submit">
+                <base-button type="submit">
                     Make rate
-                </button>
+                </base-button>
             </div>
         </form>
 
@@ -59,6 +59,8 @@
 </template>
 
 <script>
+    import BaseButton from '../../components/BaseComponents/BaseButton'
+
     export default {
         data() {
             return {
@@ -66,6 +68,9 @@
                 rate: '',
                 isValid: true,
             }
+        },
+        components: {
+            BaseButton,
         },
         methods: {
             enterRate(event) {
@@ -203,17 +208,9 @@
         margin-top: 1rem;
 
         button {
-            padding: .5rem 2rem;
-            font-size: 1.2rem;
             color: #fff;
             background-color: #007bff;
             border-color: #007bff;
-            -webkit-border-radius: 1rem;
-            -moz-border-radius: 1rem;
-            border-radius: 1rem;
-            outline: none;
-            cursor: pointer;
-
             &:hover {
                 background-color: #0069d9;
                 border-color: #0062cc;
