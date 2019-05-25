@@ -1,10 +1,10 @@
 <template>
     <div class="base-multilist">
         <div class="selected-items__wrap">
-            <div class="selected-items">
+            <div class="selected-items" @click="removeSelectedItem">
                 <span v-for="(item, index) in selectedItems" :key="index" class="selected-item">
                     {{item.text}}
-                    <button class="btm-remove">
+                    <button class="btn-remove" :data-index="index">
                         <svg
                                 aria-hidden="true"
                                 data-prefix="fas"
@@ -16,22 +16,46 @@
                         >
                             <path
                                     fill="currentColor"
-                                    d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z">
+                                    d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19
+                                    0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48
+                                    0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48
+                                     0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28
+                                      256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24
+                                       22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07
+                                        100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28
+                                        12.28-32.19 0-44.48L242.72 256z"
+                            >
                             </path>
                         </svg>
                     </button>
                 </span>
-                <button class="btn-toggle" @click="toggle = !toggle">Toggle</button>
             </div>
-
+            <button class="btn-toggle" @click="toggle = !toggle">
+                <svg
+                        :class="{'opened-list': toggle}"
+                        aria-hidden="true"
+                        data-prefix="fas"
+                        data-icon="angle-down"
+                        class="svg-inline--fa fa-angle-down fa-w-10"
+                        role="img" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 320 512">
+                    <path
+                            fill="currentColor"
+                            d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4
+                             96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4
+                              24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"
+                    >
+                    </path>
+                </svg>
+            </button>
         </div>
         <transition name="multilist">
             <ul class="multiselect" v-if="toggle">
-                <li v-for="(elem, index) in list" :key="index">
-                    <h5 v-if="elem.subtitle">
-                        {{elem.subtitle}}
-                    </h5>
-                    <label class="list-item">
+                <li v-for="(elem, index) in list" :key="index" class="list-item">
+                    <!--<h5 v-if="elem.subtitle">-->
+                        <!--{{elem.subtitle}}-->
+                    <!--</h5>-->
+                    <label class="list-item-label">
                         <input type="checkbox" v-model="elem.selected">
                         <p>
                             {{elem.text}}
@@ -75,6 +99,20 @@
                     return item.selected;
                 })
             }
+        },
+        methods: {
+            removeSelectedItem(event) {
+                const target = event.target;
+                const currentTarget = event.currentTarget;
+                const btn = this.$closest(target, '.btn-remove', currentTarget);
+                if (btn && btn.dataset.index) {
+                    const index = btn.dataset.index;
+                    this.unselectListItem(index);
+                }
+            },
+            unselectListItem(index) {
+                this.$set(this.selectedItems[index], 'selected', false);
+            }
         }
     }
 </script>
@@ -86,6 +124,15 @@
         justify-content: center;
         flex-direction: column;
         align-items: center;
+        margin-top: 1rem;
+    }
+
+    .opened-list {
+        -webkit-transform: rotate(-180deg);
+        -moz-transform: rotate(-180deg);
+        -ms-transform: rotate(-180deg);
+        -o-transform: rotate(-180deg);
+        transform: rotate(-180deg);
     }
 
     .remove-selected-item {
@@ -96,16 +143,16 @@
         width: 100%;
         display: flex;
         justify-content: center;
+        border: 1px solid grey;
+        /*max-width: 500px;*/
     }
 
     .selected-items {
-        border: 1px solid grey;
         display: flex;
         flex-wrap: wrap;
         padding: 0 .5rem .5rem;
         width: 100%;
-        max-width: 650px;
-        min-height: 2rem;
+        min-height: 2.2rem;
     }
 
     .selected-item {
@@ -120,14 +167,33 @@
     }
 
     .btn-toggle {
-        border:none;
+        border: none;
         outline: none;
-        height: 100%;
-        /*max*/
+        padding: 0 1rem;
+        cursor: pointer;
+
+        svg {
+            float: left;
+            width: 14px;
+            height: 15px;
+            /* width: 100%; */
+            margin: 0;
+            padding: 0;
+            -webkit-transition: all .3s;
+            -moz-transition: all .3s;
+            -ms-transition: all .3s;
+            -o-transition: all .3s;
+            transition: all .3s;
+        }
+
+        path {
+            float: left;
+            width: 100%;
+        }
     }
 
-    .btm-remove {
-        border:none;
+    .btn-remove {
+        border: none;
         outline: none;
         height: 15px;
         width: 15px;
@@ -139,34 +205,63 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 1px;
+        padding: 2px;
         margin-left: 5px;
         margin-right: 5px;
-        /* padding-top: 2px;
-        padding-bottom: 2px; */
         cursor: pointer;
-    }
 
-    svg {
-        float: left;
-        width: 11px;
-        height: 11px;
-        /* width: 100%; */
-        margin: 0;
-        padding: 0;
-    }
-    path {
-        float: left;
-        width: 100%;
+        svg {
+            float: left;
+            width: 100%;
+            height: 100%;
+            /* width: 100%; */
+            margin: 0;
+            padding: 0;
+            -webkit-transition: all .3s;
+            -moz-transition: all .3s;
+            -ms-transition: all .3s;
+            -o-transition: all .3s;
+            transition: all .3s;
+        }
+
+        path {
+            float: left;
+            width: 100%;
+        }
     }
 
     .multiselect {
         list-style: none;
+        /*padding: .5rem 1rem;*/
+        border: 1px solid grey;
+        border-top: none;
+        width: 100%;
+
+
     }
 
     .list-item {
-        display: flex;
+        width: 100%;
+        border-top: 1px solid grey;
+        &:first-child {
+            border-top: none;
+        }
+    }
 
+    .list-item-label {
+        width: calc(100% - 1rem);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: .5rem .5rem;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        p {
+            line-height: 1em;
+        }
     }
 
     .multilist-enter {
@@ -187,14 +282,14 @@
     .multilist-leave-to {
         height: 0;
         opacity: 0;
-        transform: translateX(50px);
+        transform: scale(0);
     }
 
     .multilist-enter-active {
         /*transition: all .4s;*/
         transform-origin: top;
         overflow: hidden;
-        transition: transform 0.3s ease-out; // note that we're transitioning transform, not height!
+        transition: transform 0.3s ease-out;
         height: auto;
     }
 
