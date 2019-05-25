@@ -7,17 +7,32 @@
             </div>
         </main>
         <loading-indicator></loading-indicator>
+        <base-modal v-if="$store.getters.isShownModal" @close="closeModalWindow">
+            <template v-slot:header>
+                <h3>{{$store.getters.modalMsg.title}}</h3>
+            </template>
+            {{$store.getters.modalMsg.info}}
+        </base-modal>
     </div>
 </template>
 
 <script>
     import TheHeader from './components/TheHeader'
     import LoadingIndicator from './components/LoadingIndicator'
+    import BaseModal from './components/BaseComponents/BaseModal'
+
     export default {
         components: {
             TheHeader,
-            LoadingIndicator
+            LoadingIndicator,
+            BaseModal
         },
+        methods: {
+            closeModalWindow() {
+                this.$store.commit('toggleModalWindow', {});
+            },
+        },
+        computed: {}
     }
 </script>
 
@@ -30,6 +45,7 @@
         color: #2c3e50;
         /*padding-top: 75px;*/
     }
+
     * {
         margin: 0;
         padding: 0;

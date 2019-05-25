@@ -138,7 +138,8 @@
                 if (this.isFullImageList) {
                     //show notification
                     const msg = `You cant upload more than ${this.imageListMaxSize} images`;
-                    this.showNotification(msg);
+                    const info = 'Delete anyone else or leave the list in this order';
+                    this.showNotification(msg,info);
                     return;
                 }
 
@@ -154,7 +155,7 @@
                         this.lot.imagesList.push(dataUrl);
                     } else {
                         // show notification
-                        this.showNotification("You have already selected this image");
+                        this.showNotification("You have already selected this image",);
                     }
                 };
                 reader.readAsDataURL(target.files[0]);
@@ -169,8 +170,8 @@
                     this.lot.imagesList.splice(index, 1);
                 }
             },
-            showNotification(msg) {
-                alert(msg);
+            showNotification(title, info = '') {
+                this.$store.commit('toggleModalWindow', {title, info})
             }
         },
         computed: {
