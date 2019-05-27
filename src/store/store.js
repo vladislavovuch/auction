@@ -7,14 +7,17 @@ Vue.use(Vuex);
 
 import LoadingIndicator from './modules/LoadingIndicator'
 import ModalWindow from './modules/ModalWindow'
+import ImageUpload from './modules/ImageUpload'
 
 import urlsMapping from './UrlsMapping'
 
 export default new Vuex.Store({
-    strict: process.env.NODE_ENV !== 'production',
+    // strict: process.env.NODE_ENV !== 'production',
     modules: [
         LoadingIndicator,
         ModalWindow,
+        ImageUpload,
+
     ],
     state: {
         BASE_URL: 'http://localhost:3000',

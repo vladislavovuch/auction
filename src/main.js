@@ -36,7 +36,26 @@ Vue.prototype.$uuid = function () {
         return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
     });
     return guid;
-}
+};
+
+// Firebase App (the core Firebase SDK) is always required and must be listed first
+import * as firebase from "firebase/app";
+
+// Add the Firebase products that you want to use
+// import "firebase/auth";
+// import "firebase/firestore";
+import 'firebase/storage'
+
+
+const firebaseConfig = {
+    apiKey: 'AIzaSyDP-bbfVwnM0ugf92BfzSXCjPIHrtuTxPQ',
+    // authDomain: '<your-auth-domain>',
+    // databaseURL: 'https://tecki.firebaseio.com/',
+    storageBucket: 'auction-a1976.appspot.com'
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 
 const vm = new Vue({
     router,

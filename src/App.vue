@@ -46,6 +46,12 @@
         /*padding-top: 75px;*/
     }
 
+    %align_center {
+        display: flex;
+        justify-content: center;
+    }
+
+
     * {
         margin: 0;
         padding: 0;
