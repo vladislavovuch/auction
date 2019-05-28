@@ -2,7 +2,10 @@
     <div class="lot-details" v-if="lot">
         <!--images slider-->
         <div class="img-slider">
-            <img :src="lot.imagesList[0].url" alt="lot main picture">
+            <!--<img :src="lot.imagesList[0].url" alt="lot main picture">-->
+            <base-slider :dots="lot.imagesList.length > 1" :arrows="lot.imagesList.length > 1">
+                <img class="slider-image" v-for="(image, index) in lot.imagesList" :key="index" :src="image.url" alt="">
+            </base-slider>
         </div>
         <h2>
             {{lot.title}}
@@ -59,6 +62,7 @@
 
 <script>
     import BaseButton from '../../components/BaseComponents/BaseButton'
+    import BaseSlider from '../../components/BaseComponents/BaseSlider'
 
     export default {
         data() {
@@ -70,6 +74,7 @@
         },
         components: {
             BaseButton,
+            BaseSlider,
         },
         methods: {
             enterRate(event) {
@@ -94,6 +99,8 @@
         },
         beforeMount() {
             console.log('Before mount');
+            debugger;
+            console.log(this.lot);
         },
         mounted() {
             console.log('Mounted');
@@ -101,17 +108,21 @@
         beforeRouteEnter(to, from, next) {
             next(vm => {
                 console.log("Before route enter");
+                console.log(to.params.id);
                 vm.id = to.params.id;
+                // const id =
                 // if such lot isnt in store already
                 if (vm.lot === undefined) {
                     // make request and get such lot
-                    vm.$store.dispatch('getSpecificLot', vm.id)
+                    vm.$store.dispatch('getSpecificLot', to.params.id)
                 }
             });
         },
         computed: {
             lot() {
-                return this.$store.getters.getLot(this.id);
+                if (this.id) {
+                    return this.$store.getters.getLot(this.id);
+                }
             },
             minimalRate() {
                 return +this.lot.minStep + +this.lot.price;
@@ -132,11 +143,12 @@
         width: 100%;
 
         img {
-            width: auto;
+            width: 100%;
             max-width: 1000px;
-            height: auto;
+            height: 100%;
             max-height: 400px;
-            object-fit: cover;
+            -o-object-fit: cover;
+            object-fit: contain;
         }
     }
 

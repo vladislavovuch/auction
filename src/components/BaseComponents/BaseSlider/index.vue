@@ -96,7 +96,7 @@
             list() {
                 return this.$slots.default;
             },
-            elem() {
+            isShowArrows() {
 
             }
         },
