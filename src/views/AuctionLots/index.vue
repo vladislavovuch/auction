@@ -1,9 +1,9 @@
 <template>
     <div class="auction_lots" @click="showLotDetails">
         <lot-preview
-                v-for="(user, index) in $store.state.lotsShortList"
-                :key="index"
-                :user="user"
+                v-for="lot in $store.getters.lotsPreview"
+                :key="lot.id"
+                :lot="lot"
         ></lot-preview>
 
     </div>
@@ -27,6 +27,12 @@
                     this.$router.push(`/lot-detailes-${id}`);
                 }
             }
+        },
+        created() {
+            this.$store.dispatch('getLotsPreview');
+        },
+        updated() {
+            console.log("Updated");
         }
     }
 </script>

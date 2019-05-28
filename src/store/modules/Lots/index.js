@@ -1,102 +1,67 @@
 import firebase from 'firebase/app'
 import urlsMapping from "../../UrlsMapping";
 import axios from "axios";
+import router from '../../../router'
 
 export default {
     state: {
         BASE_URL: 'http://localhost:3000',
-        lotsShortList: [],
+        lotsShortList: null,
         lots: []
     },
     getters: {
         getLot: state => id => {
             return state.lots.find(lot => lot.id === id);
         },
+        lotsPreview(state) {
+            return state.lotsShortList;
+        }
     },
     mutations: {
         addLot(state, payload) {
             state.lots.push(payload);
+        },
+        initLotsPreview(state, list) {
+            state.lotsShortList = list;
+            console.log(state.lotsShortList);
         }
     },
     actions: {
-        getSpecificLot(context, payload) {
-            // window.fetch(urlsMapping.getLotsUrl(payload))
-            //     .then(response => {
-            //         console.log(response);
-            //         if (response.status !== 200) {
-            //             throw new Error();
-            //         }
-            //         return response.json();
-            //     })
-            //     .then(response => {
-            //         console.log(response);
-            //         // if get empty array from server
-            //         if (response.length === 0) {
-            //             throw new Error('There isnt such lot on server');
-            //         }
-            //         context.commit('addLot', response[0]);
-            //     })
-            //     .catch(err => {
-            //         console.warn(err);
-            //
-            //     })
-
+        getSpecificLot(context, id) {
             // for details - watch on particular lot`s details
             // for preview - watch on all lots
             const database = firebase.database();
-            const details = database.ref('LotsDetails/');
-            details.on('child_changed', function (data) {
+            const url = urlsMapping.lotsDetailsUrl(id);
+            const details = database.ref(url);
+            details.on('value', function (data) {
                 console.dir(data);
-                console.dir(data.val());
-                // setCommentValues(postElement, data.key, data.val().text, data.val().author);
+                const lot = data.val();
+                console.dir(lot);
+                context.commit('addLot', lot);
             });
 
         },
-        getLotsPreview() {
+        getLotsPreview(context) {
             const database = firebase.database();
-            const preview = database.ref('LotsPreview');
+            const url = urlsMapping.lotsPreviewUrl();
+            const preview = database.ref(url);
             preview.once('value', function (data) {
                 console.dir(data);
                 console.dir(data.val());
+                const previewObj = data.val();
+                context.commit('initLotsPreview', previewObj);
             })
         },
         async createNewLotPreview(context, lot) {
-            // const shortListUrl = urlsMapping.lotsPreviewUrl();
-            //
-            // const lotPreview = await context.dispatch('getLotPreviewInfo', lot);
-            //
-            // return axios.post(shortListUrl, lotPreview)
-            //     .then(response => {
-            //         console.log(response);
-            //         if (response.status >= 200 && response.status < 300) {
-            //             throw new Error(response.statusText);
-            //         }
-            //     })
-            //     .catch(err => {
-            //         console.warn(err);
-            //         throw new Error('server error');
-            //     })
+            const url = urlsMapping.lotsPreviewUrl(lot.id);
             const database = firebase.database();
-            return database.ref('LotsPreview/' + lot.id).set(lot);
+            const lotPreview = await context.dispatch('getLotPreviewInfo', lot);
+            return database.ref(url).set(lotPreview);
         },
         async createNewLotDetails(context, lot) {
-            const url = urlsMapping.lotsDetailsUrl();
-            // const options = {
-            //     'Access-Control-Allow-Origin': '*'
-            // };
-            // return axios.post(url, lot)
-            //     .then(response => {
-            //         console.log(response);
-            //         if (response.status >= 200 && response.status < 300) {
-            //             throw new Error(response.statusText);
-            //         }
-            //     })
-            //     .catch(err => {
-            //         console.warn(err);
-            //         throw new Error('server error');
-            //     });
+            const url = urlsMapping.lotsDetailsUrl(lot.id);
             const database = firebase.database();
-            return database.ref('LotsDetails/' + lot.id).set(lot);
+            return database.ref(url).set(lot);
         },
         /**
          * because of serverless arcticecture I have to make 2 requests -
@@ -111,13 +76,14 @@ export default {
                     context.dispatch('createNewLotPreview', lot)
                 ]);
                 console.log('if all is fine');
-                context.commit('toggleModalWindow', {title: 'Lot successfuly publishment', info: ''});
+                // context.commit('toggleModalWindow', {title: 'Lot successfuly publishment', info: ''});
+                router.push('/successful-publishment');
             } catch (e) {
                 console.log('server failed');
                 context.commit('toggleModalWindow', {});
             }
             // stop indicator
-            this.commit('toggleIndicator');
+            context.commit('toggleIndicator');
         },
         getLotPreviewInfo(context, lot) {
             const preview = {
@@ -126,7 +92,7 @@ export default {
                 title: lot.title,
                 finishDate: lot.finishDate,
                 price: lot.price,
-                author: lot.author,
+                author: lot.author.name,
             };
             return preview;
         }

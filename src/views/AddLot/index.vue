@@ -179,9 +179,8 @@
                 'createNewLot',
                 'getSpecificLot',
             ]),
-            async publicLot() {
-                console.log('Public lot');
-                Promise.all(
+            validateForm() {
+                return Promise.all(
                     this.$children.map(item => {
                         return item.$validator.validateAll()
                             .then(result => {
@@ -201,11 +200,14 @@
                     .then(result => {
                         return result.filter(item => !item);
                     })
+            },
+            async publicLot() {
+                console.log('Public lot');
+                return this.validateForm()
                     .then(result => {
-                        console.log(result);
                         if (result.length === 0) {
                             if (this.activeRequests) {
-                                console.log('Active request')
+                                this.publicLotAfterImageUpload();
                             } else {
                                 console.log('Saving lots');
                                 this.createNewLot(this.lot);
@@ -214,9 +216,24 @@
                     })
                     .catch(err => console.error(err))
             },
-            selectPosts(e) {
-                console.log(e);
-
+            publicLotAfterImageUpload() {
+                console.log('Active request');
+                const msg = 'Wait a little, images are still uploading';
+                this.$store.commit('toggleIndicator', msg);
+                const unwatch = this.$watch(() => {
+                        return this.activeRequests
+                    }, (n, o) => {
+                        if (n === false) {
+                            this.$store.commit('toggleIndicator');
+                            this.createNewLot(this.lot);
+                            unwatch();
+                        }
+                    }
+                );
+            },
+            selectPosts(data) {
+                console.log(data);
+                this.lot.deliveryServices = data;
             },
             showNotification(title, info = '') {
                 this.$store.commit('toggleModalWindow', {title, info})
@@ -231,15 +248,6 @@
             },
             activeRequests() {
                 return this.lot.imagesList.length !== this.imagesPreviewList.length;
-            },
-            dateValidator() {
-                const date = new Date();
-                const min = `${date.getUTCDate()}/${date.getUTCMonth()}/${date.getUTCFullYear()}`;
-                return {
-                    required: true,
-                    min,
-                }
-
             },
             minDate() {
                 const currentDate = new Date();

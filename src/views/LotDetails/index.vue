@@ -2,7 +2,7 @@
     <div class="lot-details" v-if="lot">
         <!--images slider-->
         <div class="img-slider">
-            <img :src="lot.img.url" alt="lot main picture">
+            <img :src="lot.imagesList[0].url" alt="lot main picture">
         </div>
         <h2>
             {{lot.title}}
@@ -105,7 +105,7 @@
                 // if such lot isnt in store already
                 if (vm.lot === undefined) {
                     // make request and get such lot
-                    vm.$store.dispatch('getLot', vm.id)
+                    vm.$store.dispatch('getSpecificLot', vm.id)
                 }
             });
         },
