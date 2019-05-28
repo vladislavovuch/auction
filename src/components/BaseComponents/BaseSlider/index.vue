@@ -78,8 +78,6 @@
             Vnodes: {
                 functional: true,
                 render: function (createElement, context) {
-                    // `<div><slot></slot></div>`
-                    console.dir(context);
                     return createElement('div', {
                         key: context.props.id,
                         class: {'slider-item': true,}

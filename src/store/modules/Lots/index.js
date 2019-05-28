@@ -72,22 +72,18 @@ export default {
          * 1. create lot in lots ShortList (for preview)
          * 2. create lot in lots Details list with details info
          */
-        async createNewLot(context, lot) {
-            this.commit('toggleIndicator', 'We process the entered data');
+        async sendLotData(context, lot) {
             try {
-                await Promise.all([
+                return await Promise.all([
                     context.dispatch('createNewLotDetails', lot),
                     context.dispatch('createNewLotPreview', lot)
                 ]);
-                console.log('if all is fine');
-                // context.commit('toggleModalWindow', {title: 'Lot successfuly publishment', info: ''});
-                router.push('/successful-publishment');
+                console.log('All is fine');
             } catch (e) {
                 console.log('server failed');
                 context.commit('toggleModalWindow', {});
+                throw new Error('Failed to send lot data');
             }
-            // stop indicator
-            context.commit('toggleIndicator');
         },
         getLotPreviewInfo(context, lot) {
             const preview = {
@@ -99,6 +95,28 @@ export default {
                 author: lot.author.name,
             };
             return preview;
+        },
+        async makeRate(context, {rate, id, lot}) {
+            const msg = 'Saving your rate';
+            context.commit('toggleIndicator', msg);
+            try {
+                const url = urlsMapping.sendRateUrl(id);
+                const database = firebase.database();
+                database.ref(url).push(rate);
+                /**
+                 * after saving current rate i have to update current price in preview and details lists
+                 */
+                await context.dispatch('sendLotData', lot);
+
+            } catch (e) {
+                console.warn(e);
+                const info = {
+                    title: 'Failed to save your rate',
+                    info: 'Try to reload page and make your rate again'
+                };
+                context.commit('toggleModalWindow', info);
+            }
+            context.commit('toggleIndicator', msg);
         }
     }
 }

@@ -12,8 +12,14 @@ function postLotsPreviewUrl(id) {
     return `LotsPreview/${id}`;
 }
 
+function sendRateUrl(id) {
+    return `LotsRate/${id}`;
+}
+
 export default {
     lotsDetailsUrl,
     postLotsPreviewUrl,
     getLotsPreviewUrl,
+    sendRateUrl,
+
 }

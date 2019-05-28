@@ -13,48 +13,49 @@
         <div class="price">
             Current price: {{lot.price}}
         </div>
+        <div class="delivery-service">
+            <p>
+                Delivery services:
+            </p>
+            <ul class="delivery-service-list">
+                <li v-for="(item, index) in lot.deliveryServices" :key="index">
+                    {{item}}
+                </li>
+            </ul>
+        </div>
         <form @submit.prevent="">
             <div class="rate-wrap">
                 <p>
                     minimal rate - {{minimalRate}}
                 </p>
                 <div class="rate">
-                    <p class="">
-                        Make your rate:
-                    </p>
-                    <div class="input-wrap">
-                        <input
+                        <base-input
+                                class="input-wrap"
                                 type="number"
-                                :value="rate"
+                                :value="this.rate.value"
                                 @input="enterRate"
-                                @blur="validateRate($event.target.value)"
-                                :class="[isValid ? '' : 'invalid-input']"
+                                reference="rateInput"
+                                :validation="{required: true, min_value: minimalRate}"
                         >
-                    </div>
+                            Make your rate:
+                        </base-input>
                 </div>
                 <p class="error-msg rate-error" v-if="!isValid">
                     This field is invalid
                 </p>
             </div>
             <div class="make-rate">
-                <base-button type="submit">
+                <base-button type="submit" @click="sumbitRate">
                     Make rate
                 </base-button>
             </div>
         </form>
-
         <div class="description">
             <span>
                 Description:
             </span>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Architecto debitis dicta excepturi explicabo iusto nulla quo
-                rerum veritatis voluptas. Blanditiis deserunt doloremque,
-                fuga fugiat inventore modi sint! Culpa delectus doloribus et explicabo
-                neque nisi quaerat repudiandae veritatis! Laboriosam, magnam quae!
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Adipisci cum eos quibusdam quod sapiente vel? Consequuntur in quae quidem vel.
+                {{lot.description}}
             </p>
         </div>
     </div>
@@ -62,32 +63,56 @@
 
 <script>
     import BaseButton from '../../components/BaseComponents/BaseButton'
+    import BaseInput from '../../components/BaseComponents/BaseInput'
     import BaseSlider from '../../components/BaseComponents/BaseSlider'
+    import FormValidation from '../../mixins/FormValidation'
 
     export default {
+        mixins: [
+            FormValidation,
+        ],
         data() {
             return {
                 id: null,
-                rate: '',
+                rate: {
+                    value: '',
+                    author: {
+                        fullName: "noname",
+                        nikname: 'vasia404',
+                    },
+                },
                 isValid: true,
             }
         },
         components: {
             BaseButton,
             BaseSlider,
+            BaseInput,
         },
         methods: {
-            enterRate(event) {
-                this.rate = event.target.value;
+            enterRate(value) {
+                this.rate.value = value;
             },
-            validateRate(value) {
-                // make invalid field
-                this.isValid = !(value < this.minimalRate);
-                return this.isValid;
-            },
-            sumbitRate() {
-                if (this.validateRate(this.rate)) {
-                    // make request and save data
+            // validateRate(value) {
+            //     // make invalid field
+            //     this.isValid = !(value < this.minimalRate);
+            //     return this.isValid;
+            // },
+            async sumbitRate() {
+                const errors = await this.validateForm();
+                if (errors.length === 0) {
+                    this.lot.price = this.rate.value;
+                    const payload = {
+                        id: this.id,
+                        rate: this.rate,
+                        lot: this.lot,
+                    };
+                    this.$store.dispatch('makeRate', payload);
+                    const msg = {
+                        title: 'Your rate successfully accepted',
+                        info: 'Thank you :)'
+                    };
+                    this.$store.commit('toggleModalWindow', msg);
                 }
             }
         },
@@ -160,19 +185,65 @@
     .price {
         width: 100%;
         margin-top: 1rem;
+        colot: #89c202;
+    }
+
+    .delivery-service {
+        width: 100%;
+        display: flex;
+        margin-top: 1rem;
+
+        p {
+            width: 100%;
+            text-align: right;
+            padding-right: 1rem;
+        }
+    }
+
+    .delivery-service-list {
+        width: 100%;
+        list-style: none;
+
+        li {
+            width: 100%;
+            list-style-type: none;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+
+            &:before {
+                content: '';
+                background: url('../../assets/icons/check-solid.svg');
+                background-repeat: no-repeat;
+                width: 10px;
+                height: 10px;
+                top: 0;
+                left: 0;
+                padding-right: .5rem;
+            }
+        }
     }
 
     .rate-wrap {
         margin-top: 1rem;
         width: 100%;
         clear: both;
-        >p {
-            width: 100%;
+
+        > p {
+            width: 50%;
             padding-left: 50%;
             text-align: left;
             /*float: right;*/
             /*padding-left: 1rem;*/
             margin-left: .5rem;
+            font-size: 1rem;
+        }
+    }
+
+    .input-wrap {
+        margin-top: 0;
+        label {
+            margin-top: 0 !important;
         }
     }
 
@@ -188,20 +259,20 @@
             text-align: right;
         }
 
-        input {
-             font-size: 1.2rem;
-             height: 1.2rem;
-             max-width: 300px;
-             padding: .15rem;
-         }
+        /*input {*/
+            /*font-size: 1.2rem;*/
+            /*height: 1.2rem;*/
+            /*max-width: 300px;*/
+            /*padding: .15rem;*/
+        /*}*/
 
     }
 
-    .input-wrap {
-        width: 100%;
-        display: flex;
-        justify-content: flex-start;
-    }
+    /*.input-wrap {*/
+        /*width: 100%;*/
+        /*display: flex;*/
+        /*justify-content: flex-start;*/
+    /*}*/
 
     .invalid-input {
         border-color: #dc3545;
@@ -222,6 +293,7 @@
             color: #fff;
             background-color: #007bff;
             border-color: #007bff;
+
             &:hover {
                 background-color: #0069d9;
                 border-color: #0062cc;

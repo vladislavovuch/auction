@@ -65,6 +65,7 @@
         display: flex;
         justify-content: center;
         flex-direction: column;
+        margin-top: 1rem;
     }
 
     .base-field {
@@ -72,7 +73,7 @@
         display: flex;
         justify-content: center;
         align-items: flex-start;
-        margin-top: 1rem;
+
         p {
             width: 100%;
             text-align: right;
@@ -87,6 +88,7 @@
         /*justify-content: flex-start;*/
         flex-direction: column;
         align-items: flex-start;
+
         input {
             width: 100%;
             max-width: 17rem;

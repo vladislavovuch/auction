@@ -17,11 +17,17 @@ export default {
             return context.state.result[index].cancel();
         },
         async uploadImage(context, {file, name, uuid}) {
-            const storageRef = firebase.storage().ref(uuid);
 
-            const result = storageRef.child(name).put(file);
-            context.commit('setResult', result);
-            return result;
+            try {
+                const storageRef = firebase.storage().ref(uuid);
+                const result = storageRef.child(name).put(file);
+                context.commit('setResult', result);
+                return result;
+            } catch (e) {
+                console.warn(e);
+                console.log('Failed to upload image')
+            }
+
             /*result.cancel();
 
             const url = result
@@ -42,20 +48,25 @@ export default {
             return url;*/
         },
         deleteImage(context, {name, uuid}) {
+            try {
+                const storageRef = firebase.storage().ref(uuid);
+                const desertRef = storageRef.child(name);
+                // Delete the file
+                desertRef.delete()
+                    .then(function () {
+                        // File deleted successfully
+                        console.log('Delete successfully');
+                    })
+                    .catch(function (error) {
+                        console.warn('Cant delete the image');
+                        console.warn(error);
+                        // Uh-oh, an error occurred!
+                    });
+            } catch (e) {
+                console.warn(e);
+                console.log("Failed to delete image");
+            }
 
-            const storageRef = firebase.storage().ref(uuid);
-            const desertRef = storageRef.child(name);
-            // Delete the file
-            desertRef.delete()
-                .then(function () {
-                    // File deleted successfully
-                    console.log('Delete successfully');
-                })
-                .catch(function (error) {
-                    console.warn('Cant delete the image');
-                    console.warn(error);
-                    // Uh-oh, an error occurred!
-                });
         }
     }
 }

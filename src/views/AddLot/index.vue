@@ -115,10 +115,12 @@
 
     import {mapActions} from 'vuex'
     import ImageHandler from './mixins/ImageHandler'
+    import FormValidation from '../../mixins/FormValidation'
 
     export default {
         mixins: [
             ImageHandler,
+            FormValidation,
         ],
         components: {
             BaseInput,
@@ -176,31 +178,11 @@
         },
         methods: {
             ...mapActions([
-                'createNewLot',
+                'sendLotData',
                 'getSpecificLot',
+                'toggleIndicator',
+
             ]),
-            validateForm() {
-                return Promise.all(
-                    this.$children.map(item => {
-                        return item.$validator.validateAll()
-                            .then(result => {
-                                if (!result) {
-                                    console.log(item.$validator.errors.items[0].field);
-                                    this.$el.querySelector('#' + item.$validator.errors.items[0].field).scrollIntoView({
-                                        behavior: "smooth",
-                                        block: "center",
-                                    });
-                                    return false;
-                                } else {
-                                    return true;
-                                }
-                            })
-                            .catch(err => console.error(err))
-                    }))
-                    .then(result => {
-                        return result.filter(item => !item);
-                    })
-            },
             async publicLot() {
                 console.log('Public lot');
                 return this.validateForm()
@@ -230,6 +212,18 @@
                         }
                     }
                 );
+            },
+            async createNewLot(lot) {
+                try {
+                    this.toggleIndicator('We process the entered data');
+                    await this.sendLotData(lot);
+                    this.toggleIndicator();
+                } catch (e) {
+                    console.warn(e);
+                    return;
+                }
+                console.log('After data sending')
+                router.push('/successful-publishment');
             },
             selectPosts(data) {
                 console.log(data);
