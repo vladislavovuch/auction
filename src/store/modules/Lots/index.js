@@ -11,6 +11,7 @@ export default {
     },
     getters: {
         getLot: state => id => {
+            console.dir(state.lots);
             return state.lots.find(lot => lot.id === id);
         },
         lotsPreview(state) {
@@ -37,15 +38,18 @@ export default {
                 console.dir(data);
                 const lot = data.val();
                 console.dir(lot);
-                context.commit('addLot', lot);
+                if (data.exists()) {
+                    context.commit('addLot', lot);
+                }
             });
 
         },
         getLotsPreview(context) {
             const database = firebase.database();
-            const url = urlsMapping.lotsPreviewUrl();
+            const url = urlsMapping.getLotsPreviewUrl();
             const preview = database.ref(url);
             preview.once('value', function (data) {
+                console.log('Get preview from server');
                 console.dir(data);
                 console.dir(data.val());
                 const previewObj = data.val();
@@ -53,7 +57,7 @@ export default {
             })
         },
         async createNewLotPreview(context, lot) {
-            const url = urlsMapping.lotsPreviewUrl(lot.id);
+            const url = urlsMapping.postLotsPreviewUrl(lot.id);
             const database = firebase.database();
             const lotPreview = await context.dispatch('getLotPreviewInfo', lot);
             return database.ref(url).set(lotPreview);
