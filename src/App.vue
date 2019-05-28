@@ -46,6 +46,13 @@
         /*padding-top: 75px;*/
     }
 
+    .error-msg {
+        color: red;
+        font-size: .8rem;
+        font-family: Calibri;
+        text-align: left;
+    }
+
     %align_center {
         display: flex;
         justify-content: center;
