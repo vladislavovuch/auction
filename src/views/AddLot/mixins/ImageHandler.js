@@ -14,6 +14,7 @@ export default {
                 // Vue reactivity doesnt support Set
                 if (this.imagesPreviewList.includes(dataUrl) === false) {
                     this.imagesPreviewList.push(dataUrl);
+                    this.validateImage();
                 } else {
                     this.showNotification("You have already selected this image",);
                 }
@@ -70,7 +71,6 @@ export default {
             const file = target.files[0];
             this.createFilePreview(file);
             this.saveImage(file);
-            // target.files[0] = null;
         },
         async removeImage(event) {
             const index = this.findDeletedImageIndex(event);
@@ -114,6 +114,7 @@ export default {
                 }
             }
             this.imagesPreviewList.splice(index, 1);
+            this.validateImage();
         },
         findDeletedImageIndex(event) {
             const currentTarget = event.currentTarget;
@@ -122,5 +123,15 @@ export default {
             const btn = this.$closest(target, selector, currentTarget);
             return btn && btn.dataset.index || -1;
         },
+        validateImage() {
+            /**
+             * imagesPreviewList will update asynchrony
+             */
+            Promise.resolve()
+                .then(() => {
+                    console.log("Image validator");
+                    this.$validator.validate('imagePreview');
+                })
+        }
     },
 }

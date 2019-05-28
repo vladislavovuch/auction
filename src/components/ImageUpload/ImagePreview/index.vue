@@ -1,5 +1,5 @@
 <template>
-    <div class="images-list">
+    <div class="images-list" :id="reference">
         <ul @click="removeImage">
             <li
                     v-for="(elem, index) of imagesPreviewList"
@@ -21,15 +21,28 @@
                 </button>
             </li>
         </ul>
+        <input
+                type="text"
+                style="display: none"
+                :value="imagesPreviewList[0]"
+                v-validate="{required: true}"
+                :name="reference"
+        >
+        <span class="error-msg">{{ errors.first(reference) }}</span>
     </div>
 </template>
 
 <script>
     export default {
+        inject: ['$validator'],
         props: {
             imagesPreviewList: {
                 type: Array,
                 required: true,
+            },
+            reference: {
+                required: true,
+                type: [String, Object]
             }
         },
         methods: {

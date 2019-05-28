@@ -10,46 +10,86 @@
             >
             </image-upload>
 
-            <image-preview @remove-image="removeImage" :imagesPreviewList="imagesPreviewList">
+            <image-preview
+                    @remove-image="removeImage"
+                    :imagesPreviewList="imagesPreviewList"
+                    reference="imagePreview"
+            >
             </image-preview>
 
-            <base-input v-model="lot.title">
+            <base-input
+                    v-model="lot.title"
+                    reference="lotName"
+                    :validation="{required: true}"
+            >
                 Lot name:
             </base-input>
 
-            <base-input type="number" v-model="lot.price">
+            <base-input
+                    type="number"
+                    v-model="lot.price"
+                    reference="lotPrice"
+                    :validation="numbersValidation"
+            >
                 Start price:
             </base-input>
 
-            <base-input type="number" v-model="lot.minStep">
+            <base-input
+                    type="number"
+                    v-model="lot.minStep"
+                    reference="lotRateStep"
+                    :validation="numbersValidation"
+            >
                 Minimal rate step
             </base-input>
-            <base-input type="date" v-model="lot.finishDate">
+            <base-input
+                    type="date"
+                    v-model="lot.finishDate"
+                    reference="lotFinishDate"
+                    :validation="{required: true}"
+                    :min="minDate"
+                    :max="maxDate"
+            >
                 Finish date:
             </base-input>
-            <base-input type="number" v-model="lot.lotsNumber">
+            <base-input
+                    type="number"
+                    v-model="lot.lotsNumber"
+                    reference="lotsNumber"
+                    :validation="numbersValidation"
+            >
                 Lots number:
             </base-input>
 
             <base-multilist
                     class="base-multiselect"
-                    :list="postsList"
+                    :list="deliveryServicesList"
                     @select-items="selectPosts"
+                    reference="basemultiselect"
+                    :validation="{required: true}"
             >
             </base-multilist>
 
-            <base-textarea v-model="lot.description">
+            <base-textarea v-model="lot.description" reference="lotDescription">
                 Detail lot description
             </base-textarea>
 
             <!--author contacts ?? auto substitution-->
-            <base-input v-model="lot.author.name">
+            <base-input v-model="lot.author.name" reference="lotsAuthorName">
                 Author name:
             </base-input>
-            <base-input v-model="lot.author.contacts.phoneNumber">
+            <base-input
+                    v-model="lot.author.contacts.phoneNumber"
+                    reference="lotsAuthorPhone"
+                    :validation="phoneNumber"
+            >
                 Author telephone:
             </base-input>
-            <base-input v-model="lot.author.contacts.email">
+            <base-input
+                    v-model="lot.author.contacts.email"
+                    reference="lotsAuthorEmail"
+                    :validation="{required: true, email: true}"
+            >
                 Author email:
             </base-input>
 
@@ -91,12 +131,25 @@
         },
         data() {
             return {
+                ukrTextValidation: {
+                    regex: /^[А-Яа-я іїєґ,.]+$/i,
+                    required: true,
+                },
+                phoneNumber: {
+                    required: true,
+                    regex: /^[+0-9 -]{13,17}$/
+                },
+                numbersValidation: {
+                    required: true,
+                    numeric: true,
+                    min_value: 1,
+                },
                 id: null,
                 imageListMaxSize: 5,
                 publicedImages: 0,
-                postsList: [
-                    'Нова пошта',
-                    'Укр пошта',
+                deliveryServicesList: [
+                    'Nova poshta',
+                    'Urk poshta',
                     'In time',
                     'Alliexpress',
                 ],
@@ -110,6 +163,7 @@
                     minStep: 0,
                     finishDate: '',
                     lotsNumber: 1,
+                    deliveryServices: [],
                     author: {
                         name: "Jon Show",
                         contacts: {
@@ -127,18 +181,48 @@
             ]),
             async publicLot() {
                 console.log('Public lot');
-                if (this.activeRequests) {
-                    console.log()
-                } else {
-
-                }
-                // this.$store.dispatch('createNewLot', this.lot);
+                Promise.all(
+                    this.$children.map(item => {
+                        return item.$validator.validateAll()
+                            .then(result => {
+                                if (!result) {
+                                    console.log(item.$validator.errors.items[0].field);
+                                    this.$el.querySelector('#' + item.$validator.errors.items[0].field).scrollIntoView({
+                                        behavior: "smooth",
+                                        block: "center",
+                                    });
+                                    return false;
+                                } else {
+                                    return true;
+                                }
+                            })
+                            .catch(err => console.error(err))
+                    }))
+                    .then(result => {
+                        return result.filter(item => !item);
+                    })
+                    .then(result => {
+                        console.log(result);
+                        if (result.length === 0) {
+                            if (this.activeRequests) {
+                                console.log('Active request')
+                            } else {
+                                console.log('Saving lots');
+                                this.createNewLot(this.lot);
+                            }
+                        }
+                    })
+                    .catch(err => console.error(err))
             },
             selectPosts(e) {
                 console.log(e);
+
             },
             showNotification(title, info = '') {
                 this.$store.commit('toggleModalWindow', {title, info})
+            },
+            formatDate(date) {
+                return ('0' + date).slice(-2);
             }
         },
         computed: {
@@ -147,6 +231,32 @@
             },
             activeRequests() {
                 return this.lot.imagesList.length !== this.imagesPreviewList.length;
+            },
+            dateValidator() {
+                const date = new Date();
+                const min = `${date.getUTCDate()}/${date.getUTCMonth()}/${date.getUTCFullYear()}`;
+                return {
+                    required: true,
+                    min,
+                }
+
+            },
+            minDate() {
+                const currentDate = new Date();
+                const year = currentDate.getFullYear();
+                const month = this.formatDate(currentDate.getUTCMonth() + 1);
+                const date = this.formatDate(currentDate.getUTCDate());
+                const min = `${year}-${month}-${date}`;
+                return min;
+            },
+            maxDate() {
+                const currentDate = new Date();
+                const deadlineDate = new Date(currentDate.setDate(currentDate.getDate() + 10));
+                const year = deadlineDate.getFullYear();
+                const month = this.formatDate(deadlineDate.getUTCMonth() + 1);
+                const date = this.formatDate(deadlineDate.getUTCDate());
+                const max = `${year}-${month}-${date}`;
+                return max;
             }
         },
         created() {

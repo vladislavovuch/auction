@@ -2,9 +2,16 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store/store'
+import VeeValidate from 'vee-validate';
+
+// Vue.use(VeeValidate);
+Vue.use(VeeValidate, {
+    // dictionary,
+    events: 'blur'
+});
+import firebase from './configs/Firebase'
 
 Vue.config.productionTip = false;
-
 
 /**
  * Emulate expremental js technology - closest, but with ie11 support
@@ -37,25 +44,6 @@ Vue.prototype.$uuid = function () {
     });
     return guid;
 };
-
-// Firebase App (the core Firebase SDK) is always required and must be listed first
-import * as firebase from "firebase/app";
-
-// Add the Firebase products that you want to use
-// import "firebase/auth";
-// import "firebase/firestore";
-import 'firebase/storage'
-
-
-const firebaseConfig = {
-    apiKey: 'AIzaSyDP-bbfVwnM0ugf92BfzSXCjPIHrtuTxPQ',
-    // authDomain: '<your-auth-domain>',
-    // databaseURL: 'https://tecki.firebaseio.com/',
-    storageBucket: 'auction-a1976.appspot.com'
-};
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
 
 const vm = new Vue({
     router,

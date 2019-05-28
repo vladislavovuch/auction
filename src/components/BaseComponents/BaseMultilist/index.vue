@@ -1,5 +1,5 @@
 <template>
-    <div class="base-multilist">
+    <div class="base-multilist" :id="reference">
         <div class="selected-items__wrap">
             <div class="selected-items" @click="removeSelectedItem">
                 <span v-for="(item, index) in selectedItems" :key="index" class="selected-item">
@@ -61,7 +61,16 @@
                 </li>
             </ul>
         </transition>
-
+        <input
+                class="hide-input"
+                type="text"
+                :ref="reference"
+                v-validate="validation"
+                :value="selectedItems[0]"
+                :name="reference"
+        >
+        <!--data-vv-validate-on="input|change|blur"-->
+        <span class="input-error error-msg">{{ errors.first(reference) }}</span>
     </div>
 </template>
 
@@ -81,6 +90,16 @@
                 required: true,
                 type: Array,
             },
+            reference: {
+                required: true,
+            },
+            validation: {
+                default: () => {
+                    return {
+                        required: true,
+                    }
+                }
+            }
         },
         computed: {
             selectedItems() {
@@ -97,6 +116,12 @@
         },
         methods: {
             toggleList() {
+                /**
+                 * validate selected list when it`s hiding
+                 */
+                if (this.isShownList === true) {
+                    this.$validator.validate();
+                }
                 this.isShownList = !this.isShownList;
             },
             removeSelectedItem(event) {
@@ -136,6 +161,11 @@
 </script>
 
 <style scoped lang="scss">
+    .hide-input {
+        opacity: 0;
+        height: 0;
+    }
+
     .base-multilist {
         width: 100%;
         display: flex;
@@ -261,6 +291,7 @@
     .list-item {
         width: 100%;
         border-top: 1px solid grey;
+
         &:first-child {
             border-top: none;
         }
@@ -277,6 +308,7 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+
         p {
             line-height: 1em;
         }
