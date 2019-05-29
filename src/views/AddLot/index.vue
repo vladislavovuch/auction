@@ -216,13 +216,14 @@
                 try {
                     this.$store.commit('toggleIndicator', 'We process the entered data');
                     await this.sendLotData(lot);
-                    this.$store.commit('toggleIndicator');
+                    console.log('After data sending');
+                    this.$router.push('/successful-publishment');
                 } catch (e) {
+                    this.$store.commit('toggleModalWindow', {title: e});
                     console.warn(e);
-                    return;
+                } finally {
+                    this.$store.commit('toggleIndicator');
                 }
-                console.log('After data sending');
-                this.$router.push('/successful-publishment');
             },
             selectPosts(data) {
                 console.log(data);
@@ -240,13 +241,16 @@
                 return this.imagesPreviewList.length >= this.imageListMaxSize;
             },
             activeRequests() {
+                // console.log(this.$store.getters.isActiveUploading)
+                // return this.$store.getters.isActiveUploading;
                 return this.lot.imagesList.length !== this.imagesPreviewList.length;
             },
             minDate() {
                 const currentDate = new Date();
-                const year = currentDate.getFullYear();
-                const month = this.formatDate(currentDate.getUTCMonth() + 1);
-                const date = this.formatDate(currentDate.getUTCDate());
+                const minDate = new Date(currentDate.setDate(currentDate.getDate() + 2));
+                const year = minDate.getFullYear();
+                const month = this.formatDate(minDate.getMonth() + 1);
+                const date = this.formatDate(minDate.getDate());
                 const min = `${year}-${month}-${date}`;
                 return min;
             },
@@ -254,8 +258,8 @@
                 const currentDate = new Date();
                 const deadlineDate = new Date(currentDate.setDate(currentDate.getDate() + 10));
                 const year = deadlineDate.getFullYear();
-                const month = this.formatDate(deadlineDate.getUTCMonth() + 1);
-                const date = this.formatDate(deadlineDate.getUTCDate());
+                const month = this.formatDate(deadlineDate.getMonth() + 1);
+                const date = this.formatDate(deadlineDate.getDate());
                 const max = `${year}-${month}-${date}`;
                 return max;
             }

@@ -70,6 +70,7 @@ export default {
         /**
          * because of serverless arcticecture I have to make 2 requests -
          * 1. create lot in lots ShortList (for preview)
+         * 1. create lot in lots ShortList (for preview)
          * 2. create lot in lots Details list with details info
          */
         async sendLotData(context, lot) {
@@ -81,7 +82,7 @@ export default {
                 console.log('All is fine');
             } catch (e) {
                 console.log('server failed');
-                context.commit('toggleModalWindow', {});
+                console.warn(e);
                 throw new Error('Failed to send lot data');
             }
         },
