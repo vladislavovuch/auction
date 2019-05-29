@@ -99,21 +99,27 @@
             //     return this.isValid;
             // },
             async sumbitRate() {
-                const errors = await this.validateForm();
-                if (errors.length === 0) {
-                    this.lot.price = this.rate.value;
-                    const payload = {
-                        id: this.id,
-                        rate: this.rate,
-                        lot: this.lot,
-                    };
-                    this.$store.dispatch('makeRate', payload);
-                    const msg = {
-                        title: 'Your rate successfully accepted',
-                        info: 'Thank you :)'
-                    };
-                    this.$store.commit('toggleModalWindow', msg);
+                try {
+                    const errors = await this.validateForm();
+                    if (errors.length === 0) {
+                        this.lot.price = this.rate.value;
+                        const payload = {
+                            id: this.id,
+                            rate: this.rate,
+                            lot: this.lot,
+                        };
+                        this.$store.dispatch('makeRate', payload);
+                        const msg = {
+                            title: 'Your rate successfully accepted',
+                            info: 'Thank you :)'
+                        };
+                        this.$store.commit('toggleModalWindow', msg);
+                        this.rate.value = '';
+                    }
+                } catch (err) {
+                    console.warn(err);
                 }
+
             }
         },
         created() {
@@ -186,6 +192,7 @@
         width: 100%;
         margin-top: 1rem;
         colot: #89c202;
+        word-break: break-all;
     }
 
     .delivery-service {

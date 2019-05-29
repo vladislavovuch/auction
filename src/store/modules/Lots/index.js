@@ -14,13 +14,20 @@ export default {
             console.dir(state.lots);
             return state.lots.find(lot => lot.id === id);
         },
+        getLotIndex: state => id => {
+            return state.lots.findIndex(lot => lot.id === id);
+        },
         lotsPreview(state) {
             return state.lotsShortList;
         }
     },
     mutations: {
-        addLot(state, payload) {
-            state.lots.push(payload);
+        updateLots(state, {index, lot}) {
+            if (index === -1) {
+                state.lots.push(lot);
+            } else {
+                state.lots.splice(index, 1, lot);
+            }
         },
         initLotsPreview(state, list) {
             state.lotsShortList = list;
@@ -28,6 +35,10 @@ export default {
         }
     },
     actions: {
+        changeSpecificLot(context, lot) {
+            const index = context.getters.getLotIndex(lot.id);
+            context.commit('updateLots', {index, lot});
+        },
         getSpecificLot(context, id) {
             // for details - watch on particular lot`s details
             // for preview - watch on all lots
@@ -39,7 +50,7 @@ export default {
                 const lot = data.val();
                 console.dir(lot);
                 if (data.exists()) {
-                    context.commit('addLot', lot);
+                    context.dispatch('changeSpecificLot', lot);
                 }
             });
 
