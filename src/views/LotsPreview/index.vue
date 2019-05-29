@@ -1,14 +1,10 @@
 <template>
-    <div class="auction-lots">
-        <!--<bread-crumbs></bread-crumbs>-->
-        <router-view></router-view>
-        <!--<div class="preview-list__wrap" @click="showLotDetails">-->
-            <!--<lot-preview-->
-                    <!--v-for="lot in $store.getters.lotsPreview"-->
-                    <!--:key="lot.id"-->
-                    <!--:lot="lot"-->
-            <!--&gt;</lot-preview>-->
-        <!--</div>-->
+    <div class="preview-list__wrap" @click="showLotDetails">
+        <lot-preview
+                v-for="lot in $store.getters.lotsPreview"
+                :key="lot.id"
+                :lot="lot"
+        ></lot-preview>
     </div>
 </template>
 
