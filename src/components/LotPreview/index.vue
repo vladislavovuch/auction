@@ -147,10 +147,9 @@
         color: #89c202;
         font-size: 22px;
         font-weight: 400;
+        width: 100%;
+        word-break: break-all;
     }
-
-
-
 
     .author {
         /*display: none;*/
