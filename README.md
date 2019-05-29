@@ -20,6 +20,6 @@ npm run build
 npm run lint
 ```
 ### Demo
-```
-https://auction-a1976.firebaseapp.com/auction
-```
+
+[Live demo](https://auction-a1976.firebaseapp.com/auction)
+
