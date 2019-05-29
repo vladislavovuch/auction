@@ -28,7 +28,7 @@
                 if (!target.files.length) {
                     return;
                 }
-                this.$emit('upload-image', target.files);
+                this.$emit('upload-image', event);
             }
         }
     }

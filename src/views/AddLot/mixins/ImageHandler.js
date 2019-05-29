@@ -14,6 +14,8 @@ export default {
                 // Vue reactivity doesnt support Set
                 if (this.imagesPreviewList.includes(dataUrl) === false) {
                     this.imagesPreviewList.push(dataUrl);
+                    this.imageNumber++;
+                    console.log('aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
                     this.validateImage();
                 } else {
                     this.showNotification("You have already selected this image",);
@@ -54,8 +56,7 @@ export default {
             console.log('Get image');
             console.dir(image);
         },
-        async uploadImage(files) {
-            console.log(files);
+        async uploadImage(event) {
             if (this.isFullImageList) {
                 const msg = `You cant upload more than ${this.imageListMaxSize} images`;
                 const info = 'Delete any image or leave the list in this order';

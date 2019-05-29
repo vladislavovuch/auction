@@ -133,6 +133,7 @@
         },
         data() {
             return {
+                imageNumber: 0,
                 ukrTextValidation: {
                     regex: /^[А-Яа-я іїєґ,.]+$/i,
                     required: true,
@@ -180,8 +181,6 @@
             ...mapActions([
                 'sendLotData',
                 'getSpecificLot',
-                'toggleIndicator',
-
             ]),
             async publicLot() {
                 console.log('Public lot');
@@ -215,15 +214,15 @@
             },
             async createNewLot(lot) {
                 try {
-                    this.toggleIndicator('We process the entered data');
+                    this.$store.commit('toggleIndicator', 'We process the entered data');
                     await this.sendLotData(lot);
-                    this.toggleIndicator();
+                    this.$store.commit('toggleIndicator');
                 } catch (e) {
                     console.warn(e);
                     return;
                 }
-                console.log('After data sending')
-                router.push('/successful-publishment');
+                console.log('After data sending');
+                this.$router.push('/successful-publishment');
             },
             selectPosts(data) {
                 console.log(data);
@@ -238,7 +237,7 @@
         },
         computed: {
             isFullImageList() {
-                return this.lot.imagesList.length === this.imageListMaxSize;
+                return this.imagesPreviewList.length >= this.imageListMaxSize;
             },
             activeRequests() {
                 return this.lot.imagesList.length !== this.imagesPreviewList.length;
