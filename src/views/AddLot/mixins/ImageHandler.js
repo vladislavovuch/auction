@@ -30,31 +30,20 @@ export default {
                 name,
                 uuid: this.lot.id
             };
-            const request = this.uploadImageIntoStorage(payload);
+            const imageUrl = await this.uploadImageIntoStorage(payload);
 
-            const image = await request
-                .then(async snapshot => {
-                    try {
-                        const url = await snapshot.ref.getDownloadURL();
-                        return {
-                            url,
-                            name,
-                        };
-                    } catch (e) {
-                        console.warn('Failed to read data urlW');
-                        return null;
-                    }
-                    console.log('Uploaded a blob or file!');
-                })
-                .catch(err => {
-                    console.warn(err);
-                    return null;
+            if (imageUrl) {
+                console.log("SAVE IMAGE INTO LIST");
+                this.lot.imagesList.push({
+                    url: imageUrl,
+                    name,
                 });
-            if (image) {
-                this.lot.imagesList.push(image);
+            } else {
+                // notification that request failed
+                this.showNotification('Failed to upload image', 'Try later');
             }
             console.log('Get image');
-            console.dir(image);
+            console.dir(imageUrl);
         },
         async uploadImage(event) {
             if (this.isFullImageList) {
