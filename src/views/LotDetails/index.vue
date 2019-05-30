@@ -93,11 +93,6 @@
             enterRate(value) {
                 this.rate.value = value;
             },
-            // validateRate(value) {
-            //     // make invalid field
-            //     this.isValid = !(value < this.minimalRate);
-            //     return this.isValid;
-            // },
             async sumbitRate() {
                 try {
                     const errors = await this.validateForm();
@@ -122,26 +117,11 @@
 
             }
         },
-        created() {
-            console.log("Lot details created");
-        },
-        beforeCreate() {
-            console.log('Before created lot details');
-        },
-        beforeMount() {
-            console.log('Before mount');
-            debugger;
-            console.log(this.lot);
-        },
-        mounted() {
-            console.log('Mounted');
-        },
         beforeRouteEnter(to, from, next) {
             next(vm => {
                 console.log("Before route enter");
                 console.log(to.params.id);
                 vm.id = to.params.id;
-                // const id =
                 // if such lot isnt in store already
                 if (vm.lot === undefined) {
                     // make request and get such lot

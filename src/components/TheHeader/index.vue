@@ -33,18 +33,6 @@
                     <li>
                         <a href="/about-us" title="Page about developer and company">About us</a>
                     </li>
-                    <!--<li>
-                        <a href="#prices" >Pricing</a>
-                    </li>
-                    <li>
-                        <a href="#testimonials" >Testimonials</a>
-                    </li>
-                    <li>
-                        <a href="#blog" >Blog</a>
-                    </li>
-                    <li>
-                        <a href="#contact" >Contact</a>
-                    </li>-->
                 </ul>
             </nav>
         </div>
@@ -60,32 +48,24 @@
         },
         methods: {
             showMenuList() {
-                console.log("asdfsdf");
                 this.$refs['menu_list'].classList.toggle('hide_list');
-                // this.$refs['checkbox'].checked = !this.$refs['checkbox'].checked;
-                // console.log(this.$refs['checkbox'].checked);
             },
             hideMenuList() {
                 this.$refs['menu_list'].classList.add('hide_list');
-                // this.$refs['checkbox'].checked = false;
-                console.log(this.$refs['checkbox'].checked);
             },
             changeRoute(event) {
-                console.dir(event.target.pathname);
                 const url = event.target.pathname;
                 if (url) {
                     this.$router.push(url);
                 }
             }
         },
-
     }
 </script>
 
 <style lang='scss' scoped>
     %standart {
         width: 100%;
-        /*float: left;*/
     }
     %align_horisontal {
         display: flex;

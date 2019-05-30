@@ -33,7 +33,7 @@
 <script>
     import NavigationDots from './NavigationDots'
     import ArrowButton from './ArrowButton'
-    // import ArrowButton from "./ArrowButton/index";
+
     export default {
         data() {
             return {
@@ -68,8 +68,6 @@
                 }
             },
             changeCurrentItem(index) {
-                // add con
-                console.log('change', index);
                 this.currentIndex = +index;
             }
         },
@@ -88,15 +86,11 @@
         },
         computed: {
             currentItem() {
-                // return this.list[this.currentIndex];
                 return this.$slots.default[this.currentIndex];
             },
             list() {
                 return this.$slots.default;
             },
-            isShowArrows() {
-
-            }
         },
         mounted() {
             if (this.autoPlay) {

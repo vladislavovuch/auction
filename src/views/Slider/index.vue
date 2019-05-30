@@ -16,10 +16,6 @@
         components: {
             BaseSlider,
         },
-        // mounted() {
-        //     console.dir(this);
-        //     this.$el.draggable = true;
-        // }
     }
 </script>
 

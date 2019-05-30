@@ -10,7 +10,7 @@
 <script>
     export default {
         name: "ArrowButton",
-        props: { arrowType: String }
+        props: {arrowType: String}
     };
 </script>
 
@@ -23,7 +23,6 @@
         opacity: 0.5;
     }
 
-    /* Medium devices (landscape tablets, 768px and up) */
     @media only screen and (max-width: 768px) {
         .btn {
             display: none;
