@@ -32,9 +32,6 @@
         created() {
             this.$store.dispatch('getLotsPreview');
         },
-        updated() {
-            console.log("Updated");
-        }
     }
 </script>
 

@@ -1,11 +1,17 @@
 <template>
-    <button @click="$emit('click')">
+    <button @click="emitClick">
         <slot></slot>
     </button>
 </template>
 
 <script>
-    export default {}
+    export default {
+        methods: {
+            emitClick() {
+                this.$emit('click');
+            }
+        }
+    }
 </script>
 
 <style scoped lang="scss">
@@ -15,11 +21,6 @@
         color: #fff;
         background-color: rgb(65, 184, 131);
         border: none;
-        /*border-color: #007bff;*/
-        /*border: 1px solid*/
-        /*-webkit-border-radius: 1rem;*/
-        /*-moz-border-radius: 1rem;*/
-        /*border-radius: 1rem;*/
         outline: none;
         cursor: pointer;
         margin-top: 1rem;

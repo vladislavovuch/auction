@@ -15,7 +15,6 @@ export default {
                 if (this.imagesPreviewList.includes(dataUrl) === false) {
                     this.imagesPreviewList.push(dataUrl);
                     this.imageNumber++;
-                    console.log('aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
                     this.validateImage();
                 } else {
                     this.showNotification("You have already selected this image",);
@@ -39,7 +38,6 @@ export default {
                     name,
                 });
             } else {
-                // notification that request failed
                 this.showNotification('Failed to upload image', 'Try later');
             }
             console.log('Get image');
