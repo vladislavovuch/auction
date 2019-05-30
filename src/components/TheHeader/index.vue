@@ -10,7 +10,7 @@
             <div class="my_ham ">
                 <input type="checkbox" id="checkbox4" class="checkbox4 visuallyHidden" ref="checkbox">
                 <label for="checkbox4">
-                    <div class="hamburger hamburger4" @click="showMenuList">
+                    <div class="hamburger hamburger4" @click="toggleMenuList">
                         <span class="bar bar1"></span>
                         <span class="bar bar2"></span>
                         <span class="bar bar3"></span>
@@ -19,7 +19,7 @@
                     </div>
                 </label>
             </div>
-            <nav class="menu_list hide_list" ref="menu_list" @click="hideMenuList">
+            <nav class="menu_list hide_list" ref="menu_list">
                 <ul @click.prevent="changeRoute">
                     <li>
                         <a href="/" title="Home page">Home</a>
@@ -47,16 +47,15 @@
             }
         },
         methods: {
-            showMenuList() {
+            toggleMenuList() {
                 this.$refs['menu_list'].classList.toggle('hide_list');
-            },
-            hideMenuList() {
-                this.$refs['menu_list'].classList.add('hide_list');
             },
             changeRoute(event) {
                 const url = event.target.pathname;
                 if (url) {
                     this.$router.push(url);
+                    this.$refs['menu_list'].classList.add('hide_list');
+                    this.$refs.checkbox.checked = false;
                 }
             }
         },
