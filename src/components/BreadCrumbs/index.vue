@@ -1,7 +1,7 @@
 <template>
     <div class="breadcrumbs">
         <ul @click="moveTo">
-            <li v-for="(item, index) in list" :key="index" :data-url="item.path">
+            <li v-for="(item, index) in list" :key="index" :data-url="index === list.length - 1 ? null : item.path">
                 {{item.name}}
             </li>
         </ul>
@@ -10,13 +10,6 @@
 
 <script>
     export default {
-        data() {
-            return {
-                // list: [
-                //
-                // ]
-            }
-        },
         methods: {
             moveTo(event) {
                 const url = event.target.dataset.url;
@@ -27,8 +20,6 @@
         },
         computed: {
             list() {
-                console.log(this.$router);
-                console.log(this.$route);
                 return this.$route.matched.filter((item, i, arr) => {
                     return item.name != undefined;
                 });
