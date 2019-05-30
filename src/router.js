@@ -4,7 +4,7 @@ import AuctionLots from './views/AuctionLots'
 import LotDetails from './views/LotDetails'
 import AddLot from './views/AddLot'
 import SuccessfulPublishment from './views/LotSuccessfulPublishment'
-import BaseSlider from './views/Slider'
+import LotsPreview from './views/LotsPreview'
 
 Vue.use(Router)
 
@@ -28,18 +28,24 @@ export default new Router({
         {
             path: '/auction',
             component: AuctionLots,
-        },
-        {
-            path: '/lot-detailes-:id',
-            component: LotDetails,
+            name: 'Auction',
+            children: [
+                {
+                    path: 'lot-detailes-:id',
+                    component: LotDetails,
+                    name: 'Lot detailes',
+                },
+                {
+                    path: '',
+                    component: LotsPreview,
+                    // name: 'Lotdetailes',
+                },
+
+            ]
         },
         {
             path: '/add-lot',
             component: AddLot,
-        },
-        {
-            path: '/test-slider',
-            component: BaseSlider,
         },
         {
             path: '/successful-publishment',

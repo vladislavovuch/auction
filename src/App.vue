@@ -3,6 +3,7 @@
         <the-header></the-header>
         <main>
             <div class="container">
+                <bread-crumbs></bread-crumbs>
                 <router-view/>
             </div>
         </main>
@@ -20,12 +21,15 @@
     import TheHeader from './components/TheHeader'
     import LoadingIndicator from './components/LoadingIndicator'
     import BaseModal from './components/BaseComponents/BaseModal'
+    import BreadCrumbs from './components/BreadCrumbs'
+
 
     export default {
         components: {
             TheHeader,
             LoadingIndicator,
-            BaseModal
+            BaseModal,
+            BreadCrumbs,
         },
         methods: {
             closeModalWindow() {

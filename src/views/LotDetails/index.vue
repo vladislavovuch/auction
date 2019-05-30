@@ -93,11 +93,6 @@
             enterRate(value) {
                 this.rate.value = value;
             },
-            // validateRate(value) {
-            //     // make invalid field
-            //     this.isValid = !(value < this.minimalRate);
-            //     return this.isValid;
-            // },
             async sumbitRate() {
                 try {
                     const errors = await this.validateForm();
