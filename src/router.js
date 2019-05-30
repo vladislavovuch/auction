@@ -33,12 +33,12 @@ export default new Router({
                 {
                     path: 'lot-detailes-:id',
                     component: LotDetails,
-                    name: 'Lotdetailes',
+                    name: 'Lot detailes',
                 },
                 {
                     path: '',
                     component: LotsPreview,
-                    name: 'Lotdetailes',
+                    // name: 'Lotdetailes',
                 },
 
             ]

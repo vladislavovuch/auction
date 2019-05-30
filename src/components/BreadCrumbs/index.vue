@@ -29,14 +29,8 @@
             list() {
                 console.log(this.$router);
                 console.log(this.$route);
-                return this.$route.matched.map((item, i, arr) => {
-                    return arr.length - 1 === i ? {
-                        name: item.name,
-                        path: this.$route.path,
-                    } : {
-                        name: item.name,
-                        path: item.path,
-                    }
+                return this.$route.matched.filter((item, i, arr) => {
+                    return item.name != undefined;
                 });
             }
         }
