@@ -1,33 +1,33 @@
 <template>
     <!--index can cause some problems during filtering or sorting-->
-    <div class="lot_preview" :id="user.id">
+    <div class="lot_preview" :id="lot.id">
         <div class="lot_image">
-            <!--<img :src="require(user.img.url)" :alt="user.img.alt">-->
-            <img :src="user.img.url"/>
-            {{user.img.url}}
-            <!--<img src="../../assets/stages.jpg" :alt="user.img.alt">-->
+            <!--<img :src="require(lot.img.url)" :alt="lot.img.alt">-->
+            <img :src="lot.img.url"/>
+            {{lot.img.url}}
+            <!--<img src="../../assets/stages.jpg" :alt="lot.img.alt">-->
         </div>
         <div class="description">
             <h2 class="lot_name">
-                {{user.description.title}}
+                {{lot.title}}
             </h2>
             <p class="finish_date">
-                Finish date: {{user.description.finishDate}}
+                Finish date: {{lot.finishDate}}
             </p>
             <div class="price_wrap">
                 <span class="price_title">
                     Current price:
                 </span>
                 <span class="price">
-                   {{user.description.price}}
+                   {{lot.price}}
                 </span>
             </div>
-            <!--<a :href="'/lot-details' + user.id" @click.prevent="">
+            <!--<a :href="'/lot-details' + lot.id" @click.prevent="">
                 Details >>
             </a>-->
         </div>
         <div class="author">
-            Author: {{user.description.author}}
+            Author: {{lot.author}}
         </div>
     </div>
 </template>
@@ -35,7 +35,7 @@
 <script>
     export default {
         props: {
-            user: {
+            lot: {
                 type: Object,
                 required: true,
             },
@@ -59,6 +59,9 @@
             formatFinishDate() {
                 return this.finishDate.toLocaleString();
             }
+        },
+        created() {
+            console.log(this.lot)
         }
     }
 </script>
@@ -74,9 +77,9 @@
         flex-direction: column;
         justify-content: center;
         transition: .3s;
-
+        cursor: pointer;
         &:hover {
-            cursor: pointer;
+
             border-color: #89c202;
             -webkit-box-shadow: 0px 0px 13px 0px #a8a8a8;
             -moz-box-shadow: 0px 0px 13px 0px #a8a8a8;
@@ -144,10 +147,9 @@
         color: #89c202;
         font-size: 22px;
         font-weight: 400;
+        width: 100%;
+        word-break: break-all;
     }
-
-
-
 
     .author {
         /*display: none;*/

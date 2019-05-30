@@ -1,9 +1,25 @@
 const BASE_URL = 'http://localhost:3000/';
 
-function getLotsUrl(id) {
-    return `${BASE_URL}lotsDetails?id=${id}`;
+function getLotsPreviewUrl() {
+    return `LotsPreview/`;
+}
+
+function lotsDetailsUrl(id) {
+    return 'LotsDetails/' + id;
+}
+
+function postLotsPreviewUrl(id) {
+    return `LotsPreview/${id}`;
+}
+
+function sendRateUrl(id) {
+    return `LotsRate/${id}`;
 }
 
 export default {
-    getLotsUrl,
+    lotsDetailsUrl,
+    postLotsPreviewUrl,
+    getLotsPreviewUrl,
+    sendRateUrl,
+
 }
