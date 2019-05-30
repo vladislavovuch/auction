@@ -53,10 +53,10 @@ export default {
                 const desertRef = storageRef.child(name);
 
                 desertRef.delete()
-                    .then(function () {
+                    .then(() => {
                         console.log('Delete successfully');
                     })
-                    .catch(function (error) {
+                    .catch((error) => {
                         console.warn('Cant delete the image');
                         console.warn(error);
                     });

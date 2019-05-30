@@ -69,7 +69,6 @@
                 :value="selectedItems[0]"
                 :name="reference"
         >
-        <!--data-vv-validate-on="input|change|blur"-->
         <span class="input-error error-msg">{{ errors.first(reference) }}</span>
     </div>
 </template>

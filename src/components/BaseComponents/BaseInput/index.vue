@@ -52,7 +52,6 @@
         },
         methods: {
             inputData(event) {
-                // this.value = event.target.value;
                 this.$emit('input', event.target.value);
             }
         }
@@ -99,8 +98,4 @@
         }
     }
 
-    .input-error {
-        /*padding-left: calc(50% + 1rem);*/
-        /*text-align: left;*/
-    }
 </style>

@@ -40,15 +40,14 @@ export default {
             context.commit('updateLots', {index, lot});
         },
         getSpecificLot(context, id) {
-            // for details - watch on particular lot`s details
-            // for preview - watch on all lots
             const database = firebase.database();
             const url = urlsMapping.lotsDetailsUrl(id);
             const details = database.ref(url);
+            /**
+             * add listener to update lot data
+             */
             details.on('value', function (data) {
-                console.dir(data);
                 const lot = data.val();
-                console.dir(lot);
                 if (data.exists()) {
                     context.dispatch('changeSpecificLot', lot);
                 }
@@ -61,8 +60,6 @@ export default {
             const preview = database.ref(url);
             preview.once('value', function (data) {
                 console.log('Get preview from server');
-                console.dir(data);
-                console.dir(data.val());
                 const previewObj = data.val();
                 context.commit('initLotsPreview', previewObj);
             })
@@ -73,7 +70,7 @@ export default {
             const lotPreview = await context.dispatch('getLotPreviewInfo', lot);
             return database.ref(url).set(lotPreview);
         },
-        async createNewLotDetails(context, lot) {
+        createNewLotDetails(context, lot) {
             const url = urlsMapping.lotsDetailsUrl(lot.id);
             const database = firebase.database();
             return database.ref(url).set(lot);

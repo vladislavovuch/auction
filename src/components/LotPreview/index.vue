@@ -2,10 +2,7 @@
     <!--index can cause some problems during filtering or sorting-->
     <div class="lot_preview" :id="lot.id">
         <div class="lot_image">
-            <!--<img :src="require(lot.img.url)" :alt="lot.img.alt">-->
             <img :src="lot.img.url"/>
-            {{lot.img.url}}
-            <!--<img src="../../assets/stages.jpg" :alt="lot.img.alt">-->
         </div>
         <div class="description">
             <h2 class="lot_name">
@@ -22,9 +19,6 @@
                    {{lot.price}}
                 </span>
             </div>
-            <!--<a :href="'/lot-details' + lot.id" @click.prevent="">
-                Details >>
-            </a>-->
         </div>
         <div class="author">
             Author: {{lot.author}}
@@ -39,30 +33,7 @@
                 type: Object,
                 required: true,
             },
-            /*description: {
-                type: String,
-                default: "Lot number 1",
-            },
-            currentPrice: {
-                type: Number,
-                default: 11,
-            },
-            finishDate: {
-                type: String,
-            },
-            id: {
-                type: String,
-                default: '1',
-            }*/
         },
-        computed: {
-            formatFinishDate() {
-                return this.finishDate.toLocaleString();
-            }
-        },
-        created() {
-            console.log(this.lot)
-        }
     }
 </script>
 
