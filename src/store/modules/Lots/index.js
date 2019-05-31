@@ -1,7 +1,5 @@
 import firebase from 'firebase/app'
 import urlsMapping from "../../UrlsMapping";
-import axios from "axios";
-import router from '../../../router'
 
 export default {
     state: {
