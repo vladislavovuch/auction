@@ -14,7 +14,7 @@
 <script>
     export default {
         props: {
-            list:{
+            list: {
                 required: true,
                 type: Array,
             },
@@ -44,21 +44,35 @@
             text-align: right;
             padding-right: 1rem;
         }
+    }
 
-        .entry-field {
-            width: 100%;
-            display: flex;
-            justify-content: flex-start;
-        }
+    .entry-field {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
 
         select {
             padding: .1rem 1rem;
             font-size: 1.1rem;
             cursor: pointer;
+            background-color: #fff;
 
-            option {
-                cursor: pointer;
+        }
+    }
+
+    @media screen and (max-width: 400px) {
+        .base-field {
+            width: calc(100% - 2rem);
+            padding: 0 1rem;
+            flex-direction: column;
+
+            p {
+                text-align: left;
             }
+        }
+        .entry-field {
+            justify-content: center;
+            margin-top: .5rem;
         }
     }
 </style>

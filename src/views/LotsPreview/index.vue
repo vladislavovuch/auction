@@ -4,6 +4,7 @@
                 reference="Search"
                 validation=""
                 v-model="search"
+                class="base-input"
         >
             Search
         </base-input>
@@ -11,6 +12,7 @@
         <base-select
             :list="filteredList"
             v-model="filteredProp"
+            class="filter"
         >
             Select filtered property
         </base-select>
@@ -134,6 +136,11 @@
 
     }
 
+    .base-input {
+        width: calc(100% - 2rem);
+        padding: 0 1rem;
+    }
+
     .lots-list {
         width: 100%;
         display: flex;
@@ -142,16 +149,7 @@
     }
 
     .filter {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        margin-top: 1rem;
-        p {
-            /*margin-right: 1rem;*/
-        }
-
-        select {
-            margin-left: 1rem;
-        }
+        width: calc(100% - 4rem);
+        padding: 0 2rem;
     }
 </style>

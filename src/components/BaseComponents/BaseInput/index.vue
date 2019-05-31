@@ -87,7 +87,7 @@
         /*justify-content: flex-start;*/
         flex-direction: column;
         align-items: flex-start;
-
+        padding-right: .4rem;
         input {
             width: 100%;
             max-width: 17rem;
@@ -95,6 +95,19 @@
             padding: .1rem;
             line-height: 1em;
             height: 1.4rem;
+        }
+    }
+
+    @media screen and (max-width: 400px){
+        .base-field {
+            flex-direction: column;
+            p {
+                text-align: left;
+            }
+        }
+        .entry-field {
+            width: calc(100% - 2rem);
+            padding-left: 2rem;
         }
     }
 

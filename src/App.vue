@@ -3,8 +3,7 @@
         <the-header></the-header>
         <main>
             <div class="container">
-                <bread-crumbs></bread-crumbs>
-                <router-view/>
+                <router-view></router-view>
             </div>
         </main>
         <loading-indicator></loading-indicator>

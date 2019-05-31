@@ -1,8 +1,6 @@
 <template>
     <div class="lot-details" v-if="lot">
-        <!--images slider-->
         <div class="img-slider">
-            <!--<img :src="lot.imagesList[0].url" alt="lot main picture">-->
             <base-slider :dots="lot.imagesList.length > 1" :arrows="lot.imagesList.length > 1">
                 <img class="slider-image" v-for="(image, index) in lot.imagesList" :key="index" :src="image.url" alt="">
             </base-slider>
