@@ -4,11 +4,8 @@
             <slot></slot>
         </p>
         <div class="entry-field">
-            <select multiple name="" id="">
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
+            <select name="" id="" :value="value" @input="changeValue">
+                <option :value="index" v-for="(item, index) in list" :key="index">{{item}}</option>
             </select>
         </div>
     </label>
@@ -17,7 +14,19 @@
 <script>
     export default {
         props: {
-
+            list:{
+                required: true,
+                type: Array,
+            },
+            value: {
+                required: true,
+                type: String,
+            }
+        },
+        methods: {
+            changeValue(event) {
+                this.$emit('input', event.target.value);
+            }
         }
     }
 </script>
@@ -28,6 +37,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        margin-top: 1rem;
 
         p {
             width: 100%;
@@ -39,9 +49,16 @@
             width: 100%;
             display: flex;
             justify-content: flex-start;
-
-
         }
 
+        select {
+            padding: .1rem 1rem;
+            font-size: 1.1rem;
+            cursor: pointer;
+
+            option {
+                cursor: pointer;
+            }
+        }
     }
 </style>

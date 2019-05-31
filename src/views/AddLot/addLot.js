@@ -1,4 +1,3 @@
-
 import BaseInput from '../../components/BaseComponents/BaseInput'
 import BaseButton from '../../components/BaseComponents/BaseButton'
 import BaseSelect from '../../components/BaseComponents/BaseSelect'
@@ -51,7 +50,6 @@ export default {
                 'Alliexpress',
             ],
             imagesPreviewList: [],
-            // request: null,
             lot: {
                 title: "",
                 imagesList: [],
