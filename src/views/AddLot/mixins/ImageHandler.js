@@ -39,7 +39,7 @@ export default {
                     name,
                 });
             } else {
-                this.showNotification('Failed to upload image', 'Try later');
+                this.showNotification('Image hasn`t been upload', 'Try later');
             }
             console.log('Get image');
             console.dir(imageUrl);

@@ -100,6 +100,10 @@
             },
             changePage(pageNum) {
                 this.currentPage = pageNum;
+                document.body.scrollIntoView({
+                    behavior: "smooth",
+                    block:    "start",
+                });
             }
         },
         computed: {
