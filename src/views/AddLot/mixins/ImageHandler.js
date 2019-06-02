@@ -16,6 +16,7 @@ export default {
                     this.imagesPreviewList.push(dataUrl);
                     this.imageNumber++;
                     this.validateImage();
+                    this.saveImage(file);
                 } else {
                     this.showNotification("You have already selected this image",);
                 }
@@ -58,7 +59,6 @@ export default {
 
             const file = target.files[0];
             this.createFilePreview(file);
-            this.saveImage(file);
         },
         async removeImage(event) {
             const index = this.findDeletedImageIndex(event);

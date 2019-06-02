@@ -115,7 +115,7 @@
     }
 
     .base-multiselect {
-        max-width: 500px;
+        max-width: 570px;
         margin: 0 auto;
         margin-top: 1rem;
     }

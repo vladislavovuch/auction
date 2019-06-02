@@ -1,34 +1,39 @@
 <template>
     <div class="lot-details" v-if="lot">
-        <!--images slider-->
-        <div class="img-slider">
-            <!--<img :src="lot.imagesList[0].url" alt="lot main picture">-->
-            <base-slider :dots="lot.imagesList.length > 1" :arrows="lot.imagesList.length > 1">
-                <img class="slider-image" v-for="(image, index) in lot.imagesList" :key="index" :src="image.url" alt="">
-            </base-slider>
-        </div>
-        <h2>
-            {{lot.title}}
-        </h2>
-        <div class="price">
-            Current price: {{lot.price}}
-        </div>
-        <div class="delivery-service">
-            <p>
-                Delivery services:
-            </p>
-            <ul class="delivery-service-list">
-                <li v-for="(item, index) in lot.deliveryServices" :key="index">
-                    {{item}}
-                </li>
-            </ul>
-        </div>
-        <form @submit.prevent="">
-            <div class="rate-wrap">
+        <div class="container">
+            <div class="img-slider">
+                <base-slider :dots="lot.imagesList.length > 1" :arrows="lot.imagesList.length > 1">
+                    <img
+                            class="slider-image"
+                            v-for="(image, index) in lot.imagesList"
+                            :key="index"
+                            :src="image.url"
+                            alt=""
+                    >
+                </base-slider>
+            </div>
+            <h2>
+                {{lot.title}}
+            </h2>
+            <div class="price">
+                Current price: {{lot.price}}
+            </div>
+            <div class="delivery-service">
                 <p>
-                    minimal rate - {{minimalRate}}
+                    Delivery services:
                 </p>
-                <div class="rate">
+                <ul class="delivery-service-list">
+                    <li v-for="(item, index) in lot.deliveryServices" :key="index">
+                        {{item}}
+                    </li>
+                </ul>
+            </div>
+            <form @submit.prevent="">
+                <div class="rate-wrap">
+                    <p>
+                        minimal rate - {{minimalRate}}
+                    </p>
+                    <div class="rate">
                         <base-input
                                 class="input-wrap"
                                 type="number"
@@ -39,24 +44,25 @@
                         >
                             Make your rate:
                         </base-input>
+                    </div>
+                    <p class="error-msg rate-error" v-if="!isValid">
+                        This field is invalid
+                    </p>
                 </div>
-                <p class="error-msg rate-error" v-if="!isValid">
-                    This field is invalid
-                </p>
-            </div>
-            <div class="make-rate">
-                <base-button type="submit" @click="sumbitRate">
-                    Make rate
-                </base-button>
-            </div>
-        </form>
-        <div class="description">
+                <div class="make-rate">
+                    <base-button type="submit" @click="sumbitRate">
+                        Make rate
+                    </base-button>
+                </div>
+            </form>
+            <div class="description">
             <span>
                 Description:
             </span>
-            <p>
-                {{lot.description}}
-            </p>
+                <p>
+                    {{lot.description}}
+                </p>
+            </div>
         </div>
     </div>
 </template>
@@ -152,6 +158,9 @@
 
     .img-slider {
         width: 100%;
+        max-width: 1000px;
+        max-height: calc(100vw - 4rem);
+        height: 400px;
 
         img {
             width: 100%;
@@ -160,6 +169,10 @@
             max-height: 400px;
             -o-object-fit: cover;
             object-fit: contain;
+            position: absolute;
+            top: 0;
+            left: 0;
+            float: left;
         }
     }
 
@@ -229,6 +242,7 @@
 
     .input-wrap {
         margin-top: 0;
+
         label {
             margin-top: 0 !important;
         }
@@ -245,21 +259,7 @@
             margin-right: 1rem;
             text-align: right;
         }
-
-        /*input {*/
-            /*font-size: 1.2rem;*/
-            /*height: 1.2rem;*/
-            /*max-width: 300px;*/
-            /*padding: .15rem;*/
-        /*}*/
-
     }
-
-    /*.input-wrap {*/
-        /*width: 100%;*/
-        /*display: flex;*/
-        /*justify-content: flex-start;*/
-    /*}*/
 
     .invalid-input {
         border-color: #dc3545;
@@ -298,8 +298,6 @@
             font-weight: bold;
             font-size: 1.1rem;
         }
-
-        /*padding: 0.5rem 2rem;*/
     }
 
 </style>
