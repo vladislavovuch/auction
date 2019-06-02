@@ -50,7 +50,6 @@ export default {
                     context.dispatch('changeSpecificLot', lot);
                 }
             });
-
         },
         getLotsPreview(context) {
             const database = firebase.database();

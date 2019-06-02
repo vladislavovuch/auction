@@ -105,20 +105,24 @@
 <style lang="scss">
     .base-slider {
         width: 100%;
+        height: 100%;
         display: flex;
         align-items: center;
         flex-direction: column;
         .slider-wrap {
             display: flex;
             width: 100%;
+            height: 100%;
             align-items: center;
             justify-content: center;
         }
 
         .slider {
             position: relative;
-            width: 300px;
-            height: 300px;
+            width: 100vw;
+            height: 100vh;
+            max-width: 100%;
+            max-height: 100%;
             overflow: hidden;
         }
 
@@ -130,9 +134,12 @@
             height: 100%;
             top: 0;
             left: 0;
+            z-index: -1;
         }
 
         .slider-content {
+
+            z-index: -1;
             position: absolute;
             width: 100%;
             height: 100%;

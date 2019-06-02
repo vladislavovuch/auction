@@ -1,9 +1,11 @@
 <template>
     <div class="auction-lots">
-        <bread-crumbs class="bread-crumbs"></bread-crumbs>
-        <keep-alive>
-            <router-view></router-view>
-        </keep-alive>
+        <div class="container">
+            <bread-crumbs class="bread-crumbs"></bread-crumbs>
+            <keep-alive>
+                <router-view></router-view>
+            </keep-alive>
+        </div>
     </div>
 </template>
 

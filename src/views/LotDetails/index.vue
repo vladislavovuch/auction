@@ -1,32 +1,33 @@
 <template>
     <div class="lot-details" v-if="lot">
-        <div class="img-slider">
-            <base-slider :dots="lot.imagesList.length > 1" :arrows="lot.imagesList.length > 1">
-                <img class="slider-image" v-for="(image, index) in lot.imagesList" :key="index" :src="image.url" alt="">
-            </base-slider>
-        </div>
-        <h2>
-            {{lot.title}}
-        </h2>
-        <div class="price">
-            Current price: {{lot.price}}
-        </div>
-        <div class="delivery-service">
-            <p>
-                Delivery services:
-            </p>
-            <ul class="delivery-service-list">
-                <li v-for="(item, index) in lot.deliveryServices" :key="index">
-                    {{item}}
-                </li>
-            </ul>
-        </div>
-        <form @submit.prevent="">
-            <div class="rate-wrap">
+        <div class="container">
+            <div class="img-slider">
+                <base-slider :dots="lot.imagesList.length > 1" :arrows="lot.imagesList.length > 1">
+                    <img class="slider-image" v-for="(image, index) in lot.imagesList" :key="index" :src="image.url" alt="">
+                </base-slider>
+            </div>
+            <h2>
+                {{lot.title}}
+            </h2>
+            <div class="price">
+                Current price: {{lot.price}}
+            </div>
+            <div class="delivery-service">
                 <p>
-                    minimal rate - {{minimalRate}}
+                    Delivery services:
                 </p>
-                <div class="rate">
+                <ul class="delivery-service-list">
+                    <li v-for="(item, index) in lot.deliveryServices" :key="index">
+                        {{item}}
+                    </li>
+                </ul>
+            </div>
+            <form @submit.prevent="">
+                <div class="rate-wrap">
+                    <p>
+                        minimal rate - {{minimalRate}}
+                    </p>
+                    <div class="rate">
                         <base-input
                                 class="input-wrap"
                                 type="number"
@@ -37,24 +38,25 @@
                         >
                             Make your rate:
                         </base-input>
+                    </div>
+                    <p class="error-msg rate-error" v-if="!isValid">
+                        This field is invalid
+                    </p>
                 </div>
-                <p class="error-msg rate-error" v-if="!isValid">
-                    This field is invalid
-                </p>
-            </div>
-            <div class="make-rate">
-                <base-button type="submit" @click="sumbitRate">
-                    Make rate
-                </base-button>
-            </div>
-        </form>
-        <div class="description">
+                <div class="make-rate">
+                    <base-button type="submit" @click="sumbitRate">
+                        Make rate
+                    </base-button>
+                </div>
+            </form>
+            <div class="description">
             <span>
                 Description:
             </span>
-            <p>
-                {{lot.description}}
-            </p>
+                <p>
+                    {{lot.description}}
+                </p>
+            </div>
         </div>
     </div>
 </template>
@@ -150,7 +152,8 @@
 
     .img-slider {
         width: 100%;
-
+        max-width: 1000px;
+        max-height: 400px;
         img {
             width: 100%;
             max-width: 1000px;

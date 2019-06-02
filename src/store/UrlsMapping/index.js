@@ -16,10 +16,14 @@ function sendRateUrl(id) {
     return `LotsRate/${id}`;
 }
 
+function getArticlesUrl() {
+    return 'Articles/'
+}
+
 export default {
     lotsDetailsUrl,
     postLotsPreviewUrl,
     getLotsPreviewUrl,
     sendRateUrl,
-
+    getArticlesUrl,
 }

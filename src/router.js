@@ -5,6 +5,7 @@ import LotDetails from './views/LotDetails'
 import AddLot from './views/AddLot'
 import SuccessfulPublishment from './views/LotSuccessfulPublishment'
 import LotsPreview from './views/LotsPreview'
+import Home from './views/Home'
 
 Vue.use(Router);
 
@@ -12,6 +13,10 @@ export default new Router({
     mode: 'history',
     base: process.env.BASE_URL,
     routes: [
+        {
+            path: '',
+            component: Home,
+        },
         {
             path: '/auction',
             component: AuctionLots,

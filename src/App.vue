@@ -2,9 +2,9 @@
     <div id="app">
         <the-header></the-header>
         <main>
-            <div class="container">
+            <!--<div class="container">-->
                 <router-view></router-view>
-            </div>
+            <!--</div>-->
         </main>
         <loading-indicator></loading-indicator>
         <base-modal v-if="$store.getters.isShownModal" @close="closeModalWindow">
@@ -13,11 +13,13 @@
             </template>
             {{$store.getters.modalMsg.info}}
         </base-modal>
+        <the-footer></the-footer>
     </div>
 </template>
 
 <script>
     import TheHeader from './components/TheHeader'
+    import TheFooter from './components/TheFooter'
     import LoadingIndicator from './components/LoadingIndicator'
     import BaseModal from './components/BaseComponents/BaseModal'
     import BreadCrumbs from './components/BreadCrumbs'
@@ -29,6 +31,7 @@
             LoadingIndicator,
             BaseModal,
             BreadCrumbs,
+            TheFooter,
         },
         methods: {
             closeModalWindow() {
@@ -47,6 +50,9 @@
         text-align: center;
         color: #2c3e50;
         /*padding-top: 75px;*/
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
     }
 
     .error-msg {
@@ -75,6 +81,8 @@
     main {
         margin-top: 75px;
         width: 100%;
+        flex: 1 0 auto;
+        /*padding-bottom: 2rem;*/
     }
 
 </style>
