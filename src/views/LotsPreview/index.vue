@@ -14,7 +14,7 @@
             v-model="filteredProp"
             class="filter"
         >
-            Select filtered property
+            Select sorted property
         </base-select>
 
         <div class="lots-list__wrap" v-if="$store.getters.lotsPreview">

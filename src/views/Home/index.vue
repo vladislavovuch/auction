@@ -40,7 +40,7 @@
         },
         data() {
             return {
-                articles: [
+               /* articles: [
                     {
 
                         title: "Coins of Alexander the Great",
@@ -147,7 +147,7 @@
                         img: 'https://firebasestorage.googleapis.com/v0/b/auction-a1976.appspot.com/o/articles-imgs%2Farticle-coin.png?alt=media&token=d73b9f37-c7c8-4404-af03-741fbaab914a',
                     },
 
-                ],
+                ],*/
                 categories: [
                     'Coins',
                     'Axes',
@@ -170,13 +170,6 @@
             // })
 
             this.$store.dispatch('getArticles');
-
-            // db.collection("Articles").where('category', '==', 'Coins').where('category', '==', 'Axes').get()
-            //     .then(querySnapshot => {
-            //         querySnapshot.forEach(function (doc) {
-            //             console.log(doc.id, ' => ', doc.data());
-            //         });
-            //     })
         }
     }
 </script>
@@ -200,15 +193,19 @@
 
     .home-slider {
         width: 100%;
-        height: calc(100% - 75px);
+        height: calc(100vh - 75px);
         max-height: 100vw;
         background-color: rgba(0, 0, 0, 0.1);
     }
 
     img {
-        width: 100%;
-        height: 100%;
-        max-height: calc(100vh - 75px);
+        width: 100vw;
+        height: calc(100vh - 75px);
+        max-height: 100%;
         object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        float: left;
     }
 </style>

@@ -3,7 +3,13 @@
         <div class="container">
             <div class="img-slider">
                 <base-slider :dots="lot.imagesList.length > 1" :arrows="lot.imagesList.length > 1">
-                    <img class="slider-image" v-for="(image, index) in lot.imagesList" :key="index" :src="image.url" alt="">
+                    <img
+                            class="slider-image"
+                            v-for="(image, index) in lot.imagesList"
+                            :key="index"
+                            :src="image.url"
+                            alt=""
+                    >
                 </base-slider>
             </div>
             <h2>
@@ -153,7 +159,9 @@
     .img-slider {
         width: 100%;
         max-width: 1000px;
-        max-height: 400px;
+        max-height: calc(100vw - 4rem);
+        height: 400px;
+
         img {
             width: 100%;
             max-width: 1000px;
@@ -161,6 +169,10 @@
             max-height: 400px;
             -o-object-fit: cover;
             object-fit: contain;
+            position: absolute;
+            top: 0;
+            left: 0;
+            float: left;
         }
     }
 
@@ -230,6 +242,7 @@
 
     .input-wrap {
         margin-top: 0;
+
         label {
             margin-top: 0 !important;
         }
@@ -246,21 +259,7 @@
             margin-right: 1rem;
             text-align: right;
         }
-
-        /*input {*/
-            /*font-size: 1.2rem;*/
-            /*height: 1.2rem;*/
-            /*max-width: 300px;*/
-            /*padding: .15rem;*/
-        /*}*/
-
     }
-
-    /*.input-wrap {*/
-        /*width: 100%;*/
-        /*display: flex;*/
-        /*justify-content: flex-start;*/
-    /*}*/
 
     .invalid-input {
         border-color: #dc3545;
@@ -299,8 +298,6 @@
             font-weight: bold;
             font-size: 1.1rem;
         }
-
-        /*padding: 0.5rem 2rem;*/
     }
 
 </style>
