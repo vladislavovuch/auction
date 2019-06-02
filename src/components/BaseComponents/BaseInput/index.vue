@@ -52,7 +52,14 @@
         },
         methods: {
             inputData(event) {
-                this.$emit('input', event.target.value);
+                let value = event.target.value;
+                /**
+                 * delete all leading zeros
+                 */
+                if (this.type === 'number') {
+                    value = parseInt(value, 10);
+                }
+                this.$emit('input', value);
             }
         }
     }
