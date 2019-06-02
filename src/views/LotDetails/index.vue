@@ -33,7 +33,7 @@
                     <p>
                         minimal rate - {{minimalRate}}
                     </p>
-                    <div class="rate">
+                    <div class="lot-details__rate">
                         <base-input
                                 class="input-wrap"
                                 type="number"
@@ -227,19 +227,6 @@
             }
         }
 
-        .rate {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            p {
-                width: 100%;
-                margin-right: 1rem;
-                text-align: right;
-            }
-        }
-
         .invalid-input {
             border-color: #dc3545;
         }
@@ -287,6 +274,18 @@
         }
     }
 
+    .lot-details__rate {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        p {
+            width: 100%;
+            margin-right: 1rem;
+            text-align: right;
+        }
+    }
 
     .slider-image {
         width: 100%;
