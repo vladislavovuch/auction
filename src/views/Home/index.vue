@@ -1,12 +1,12 @@
 <template>
     <div class="home">
         <base-slider class="home-slider" :dots="false" :arrows="false" :auto-play="3000">
-            <img src="../../assets/vasa.jpg" alt="">
-            <img src="../../assets/coin.jpg" alt="">
-            <img src="../../assets/swords.jpg" alt="">
-            <img src="../../assets/axes.jpg" alt="">
-            <img src="../../assets/gold-swords.jpg" alt="">
-            <img src="../../assets/coin1.jpg" alt="">
+            <img class="slider-img" src="../../assets/vasa.jpg" alt="">
+            <img class="slider-img" src="../../assets/coin.jpg" alt="">
+            <img class="slider-img" src="../../assets/swords.jpg" alt="">
+            <img class="slider-img" src="../../assets/axes.jpg" alt="">
+            <img class="slider-img" src="../../assets/gold-swords.jpg" alt="">
+            <img class="slider-img" src="../../assets/coin1.jpg" alt="">
         </base-slider>
         <div class="container">
             <div class="select-categories__wrap">
@@ -174,7 +174,7 @@
     }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
     .home {
         width: 100%;
         background-color: rgba(0, 0, 0, 0.1);
@@ -196,9 +196,10 @@
         height: calc(100vh - 75px);
         max-height: 100vw;
         background-color: rgba(0, 0, 0, 0.1);
-    }
 
-    img {
+
+    }
+    .slider-img {
         width: 100vw;
         height: calc(100vh - 75px);
         max-height: 100%;
@@ -208,4 +209,5 @@
         left: 0;
         float: left;
     }
+
 </style>

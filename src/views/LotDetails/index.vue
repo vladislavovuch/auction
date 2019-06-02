@@ -1,7 +1,7 @@
 <template>
     <div class="lot-details" v-if="lot">
         <div class="container">
-            <div class="img-slider">
+            <div class="lot-details-slider">
                 <base-slider :dots="lot.imagesList.length > 1" :arrows="lot.imagesList.length > 1">
                     <img
                             class="slider-image"
@@ -12,7 +12,7 @@
                     >
                 </base-slider>
             </div>
-            <h2>
+            <h2 class="lot-title">
                 {{lot.title}}
             </h2>
             <div class="price">
@@ -148,156 +148,156 @@
     }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
     .lot-details {
         width: calc(100% - 4rem);
         padding: 2rem;
         font-size: 1.2rem;
         font-family: Calibri, sans-serif;
-    }
 
-    .img-slider {
-        width: 100%;
-        max-width: 1000px;
-        max-height: calc(100vw - 4rem);
-        height: 400px;
-
-        img {
-            width: 100%;
-            max-width: 1000px;
-            height: 100%;
-            max-height: 400px;
-            -o-object-fit: cover;
-            object-fit: contain;
-            position: absolute;
-            top: 0;
-            left: 0;
-            float: left;
+        .lot-title {
+            margin-top: 1rem;
+            font-family: "Times New Roman", serif;
         }
-    }
 
-    h2 {
-        margin-top: 1rem;
-        font-family: "Times New Roman", serif;
-    }
-
-    .price {
-        width: 100%;
-        margin-top: 1rem;
-        colot: #89c202;
-        word-break: break-all;
-    }
-
-    .delivery-service {
-        width: 100%;
-        display: flex;
-        margin-top: 1rem;
-
-        p {
+        .price {
             width: 100%;
-            text-align: right;
-            padding-right: 1rem;
+            margin-top: 1rem;
+            colot: #89c202;
+            word-break: break-all;
         }
-    }
 
-    .delivery-service-list {
-        width: 100%;
-        list-style: none;
-
-        li {
+        .delivery-service {
             width: 100%;
-            list-style-type: none;
             display: flex;
-            justify-content: flex-start;
+            margin-top: 1rem;
+
+            p {
+                width: 100%;
+                text-align: right;
+                padding-right: 1rem;
+            }
+        }
+
+        .delivery-service-list {
+            width: 100%;
+            list-style: none;
+
+            li {
+                width: 100%;
+                list-style-type: none;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+
+                &:before {
+                    content: '';
+                    background: url('../../assets/icons/check-solid.svg');
+                    background-repeat: no-repeat;
+                    width: 10px;
+                    height: 10px;
+                    top: 0;
+                    left: 0;
+                    padding-right: .5rem;
+                }
+            }
+        }
+
+        .rate-wrap {
+            margin-top: 1rem;
+            width: 100%;
+            clear: both;
+
+            > p {
+                width: 50%;
+                padding-left: 50%;
+                text-align: left;
+                /*float: right;*/
+                /*padding-left: 1rem;*/
+                margin-left: .5rem;
+                font-size: 1rem;
+            }
+        }
+
+        .input-wrap {
+            margin-top: 0;
+
+            label {
+                margin-top: 0 !important;
+            }
+        }
+
+        .rate {
+            width: 100%;
+            display: flex;
+            justify-content: center;
             align-items: center;
 
-            &:before {
-                content: '';
-                background: url('../../assets/icons/check-solid.svg');
-                background-repeat: no-repeat;
-                width: 10px;
-                height: 10px;
-                top: 0;
-                left: 0;
-                padding-right: .5rem;
+            p {
+                width: 100%;
+                margin-right: 1rem;
+                text-align: right;
             }
         }
-    }
 
-    .rate-wrap {
-        margin-top: 1rem;
-        width: 100%;
-        clear: both;
-
-        > p {
-            width: 50%;
-            padding-left: 50%;
-            text-align: left;
-            /*float: right;*/
-            /*padding-left: 1rem;*/
-            margin-left: .5rem;
-            font-size: 1rem;
+        .invalid-input {
+            border-color: #dc3545;
         }
-    }
 
-    .input-wrap {
-        margin-top: 0;
-
-        label {
-            margin-top: 0 !important;
+        .error-msg {
+            color: #dc3545;
+            font-size: .9rem;
         }
-    }
 
-    .rate {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        p {
+        .make-rate {
             width: 100%;
-            margin-right: 1rem;
-            text-align: right;
-        }
-    }
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
 
-    .invalid-input {
-        border-color: #dc3545;
-    }
+            button {
+                color: #fff;
+                background-color: #007bff;
+                border-color: #007bff;
 
-    .error-msg {
-        color: #dc3545;
-        font-size: .9rem;
-    }
-
-    .make-rate {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        margin-top: 1rem;
-
-        button {
-            color: #fff;
-            background-color: #007bff;
-            border-color: #007bff;
-
-            &:hover {
-                background-color: #0069d9;
-                border-color: #0062cc;
+                &:hover {
+                    background-color: #0069d9;
+                    border-color: #0062cc;
+                }
             }
         }
-    }
 
-    .description {
-        line-height: 1.1em;
-        margin-top: 1rem;
-        text-align: left;
-        font-size: 1rem;
+        .description {
+            line-height: 1.1em;
+            margin-top: 1rem;
+            text-align: left;
+            font-size: 1rem;
 
-        span {
-            font-weight: bold;
-            font-size: 1.1rem;
+            span {
+                font-weight: bold;
+                font-size: 1.1rem;
+            }
+        }
+
+        .lot-details-slider {
+            width: 100%;
+            max-width: 1000px;
+            max-height: calc(100vw - 4rem);
+            height: 400px;
         }
     }
 
+
+    .slider-image {
+        width: 100%;
+        max-width: 1000px;
+        height: 100%;
+        max-height: 400px;
+        /*-o-object-fit: cover;*/
+        object-fit: contain;
+        position: absolute;
+        top: 0;
+        left: 0;
+        float: left;
+    }
 </style>
