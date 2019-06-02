@@ -2,7 +2,7 @@
     <!--index can cause some problems during filtering or sorting-->
     <div class="lot_preview" :id="lot.id">
         <div class="lot_image">
-            <img :src="lot.img.url"/>
+            <img :src="lot.img.url" :alt="lot.img.name"/>
         </div>
         <div class="description">
             <h2 class="lot_name">

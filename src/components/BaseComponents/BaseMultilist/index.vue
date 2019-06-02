@@ -98,6 +98,10 @@
                         required: true,
                     }
                 }
+            },
+            selectAll: {
+                type: Boolean,
+                default: false,
             }
         },
         computed: {
@@ -152,7 +156,7 @@
             this.multiList = this.list.map(elem => {
                 return {
                     text: elem,
-                    selected: false,
+                    selected: this.selectAll,
                 }
             });
         }

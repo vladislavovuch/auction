@@ -74,23 +74,47 @@
             text-align: right;
             padding-right: 1rem;
         }
+    }
 
-        .entry-field {
+    .entry-field {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+
+        textarea {
             width: 100%;
-            display: flex;
-            justify-content: flex-start;
+            max-width: 17rem;
+            font-size: 1rem;
+            padding: .1rem;
+            /*line-height: 1em;*/
+            height: 5rem;
+            resize: vertical;
+            /*min-width: 10rem;*/
+            max-height: 25rem;
+            min-height: 2rem;
+        }
+    }
+
+    @media screen and (max-width: 400px) {
+        .base-field {
+            flex-direction: column;
+
+            p {
+                text-align: left;
+            }
+        }
+        .entry-field {
+            width: calc(100% - 2rem);
+            padding-left: 2rem;
 
             textarea {
-                width: 100%;
-                max-width: 17rem;
-                font-size: 1rem;
-                padding: .1rem;
-                /*line-height: 1em;*/
-                height: 5rem;
-                max-height: 10rem;
-                min-height: 2rem;
+                margin-top: .3em;
             }
         }
 
+        .textarea-error {
+            width: calc(100% - 2rem);
+            padding-left: 2rem;
+        }
     }
 </style>
