@@ -6,6 +6,7 @@ import AddLot from './views/AddLot'
 import SuccessfulPublishment from './views/LotSuccessfulPublishment'
 import LotsPreview from './views/LotsPreview'
 import Home from './views/Home'
+import AboutUs from './views/AboutUs'
 
 Vue.use(Router);
 
@@ -41,6 +42,10 @@ export default new Router({
         {
             path: '/successful-publishment',
             component: SuccessfulPublishment,
+        },
+        {
+            path: '/about-us',
+            component: AboutUs,
         }
 
     ]
