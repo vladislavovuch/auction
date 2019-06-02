@@ -20,11 +20,19 @@
         <div class="lots-list__wrap" v-if="$store.getters.lotsPreview">
             <div class="lots-list" @click="showLotDetails">
                 <lot-preview
-                        v-for="lot in sortedLots"
+                        v-for="lot in paginatedLots"
                         :key="lot.id"
                         :lot="lot"
                 ></lot-preview>
             </div>
+            <base-pagination
+                    class="preview-pagination"
+                    :total="filteredLots.length"
+                    :numberPerPage="numberPerPage"
+                    :currentPage="currentPage"
+                    @change-page="changePage"
+            >
+            </base-pagination>
             <div v-if="sortedLots.length === 0">
                 <h2>
                     Sorry, there is no lots with such params
@@ -40,6 +48,7 @@
     import BreadCrumbs from '../../components/BreadCrumbs'
     import BaseInput from '../../components/BaseComponents/BaseInput'
     import BaseSelect from '../../components/BaseComponents/BaseSelect'
+    import BasePagination from '../../components/BaseComponents/BasePagination'
 
     export default {
         data() {
@@ -51,7 +60,9 @@
                     'Price',
                     'Finish date',
                     'Author',
-                ]
+                ],
+                currentPage: 1,
+                numberPerPage: 6,
             }
         },
         components: {
@@ -59,6 +70,7 @@
             BreadCrumbs,
             BaseInput,
             BaseSelect,
+            BasePagination,
         },
         methods: {
             showLotDetails(event) {
@@ -85,6 +97,9 @@
                     }
                 }
                 return false;
+            },
+            changePage(pageNum) {
+                this.currentPage = pageNum;
             }
         },
         computed: {
@@ -99,6 +114,11 @@
                 return lots.filter(lot => {
                     return this.findMatch(lot, this.search);
                 })
+            },
+            paginatedLots() {
+                const start = (this.currentPage - 1) * this.numberPerPage;
+                const end = start + this.numberPerPage;
+                return this.sortedLots.slice(start, end);
             },
             sortedLots() {
                 return this.filteredLots.sort((lot1, lot2) => {
@@ -134,6 +154,11 @@
 <style scoped lang="scss">
     .lots-preview {
 
+    }
+
+    .preview-pagination {
+        width: calc(100% - 2rem);
+        padding: 1rem;
     }
 
     .base-input {

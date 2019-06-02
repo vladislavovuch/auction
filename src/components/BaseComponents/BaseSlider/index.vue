@@ -76,10 +76,17 @@
             Vnodes: {
                 functional: true,
                 render: function (createElement, context) {
-                    return createElement('div', {
+                    console.log(context);
+                    const src = context.props.vnodes.data.attrs.src;
+                    console.log(context.props.vnodes.data.attrs.src);
+                    return createElement('img', {
                         key: context.props.id,
-                        class: {'slider-item': true,}
-                    }, [context.props.vnodes])
+                        class: context.props.vnodes.data.staticClass,
+                        attrs: {
+                            src: src,
+                        },
+                    })
+                    // return `<img src="../../../assets/stages.jpg"/>`
                 }
             },
             NavigationDots,
