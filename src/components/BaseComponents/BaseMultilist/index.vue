@@ -137,7 +137,6 @@
                 }
             },
             unselectListItem(index) {
-                console.log('Unselect ', index);
                 this.$set(this.selectedItems[index], 'selected', false);
                 this.saveSelectedItems();
             },
@@ -195,7 +194,6 @@
         display: flex;
         justify-content: center;
         border: 1px solid grey;
-        /*max-width: 500px;*/
     }
 
     .selected-items {
@@ -227,7 +225,6 @@
             float: left;
             width: 14px;
             height: 15px;
-            /* width: 100%; */
             margin: 0;
             padding: 0;
             -webkit-transition: all .3s;
@@ -265,7 +262,6 @@
             float: left;
             width: 100%;
             height: 100%;
-            /* width: 100%; */
             margin: 0;
             padding: 0;
             -webkit-transition: all .3s;
@@ -318,18 +314,11 @@
     }
 
     .multilist-enter {
-        /*height: 0;*/
-        /*opacity: 0;*/
         transform: scaleY(0);
     }
 
     .multilist-enter-to {
         transform: scaleY(1);
-        /*opacity: 1;*/
-    }
-
-    .multilist-leave {
-        /*height: 100px;*/
     }
 
     .multilist-leave-to {
@@ -338,20 +327,26 @@
         transform: scale(0);
     }
 
+    $transformTime: .3s;
+
     .multilist-enter-active {
         /*transition: all .4s;*/
         transform-origin: top;
         overflow: hidden;
-        transition: transform 0.3s ease-out;
+        -webkit-transition: transform $transformTime ease-out;
+        -moz-transition: transform $transformTime ease-out;
+        -ms-transition: transform $transformTime ease-out;
+        -o-transition: transform $transformTime ease-out;
+        transition: transform $transformTime ease-out;
         height: auto;
     }
 
     .multilist-leave-active {
-        /*-webkit-transition: prop time;*/
-        /*-moz-transition: prop time;*/
-        /*-ms-transition: prop time;*/
-        /*-o-transition: prop time;*/
-        transition: all .4s;
+        -webkit-transition: all $transformTime;
+        -moz-transition: all $transformTime;
+        -ms-transition: all $transformTime;
+        -o-transition: all $transformTime;
+        transition: all $transformTime;
     }
 
 </style>

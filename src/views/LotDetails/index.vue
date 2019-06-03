@@ -163,7 +163,7 @@
         .price {
             width: 100%;
             margin-top: 1rem;
-            colot: #89c202;
+            color: #89c202;
             word-break: break-all;
         }
 
@@ -212,8 +212,6 @@
                 width: 50%;
                 padding-left: 50%;
                 text-align: left;
-                /*float: right;*/
-                /*padding-left: 1rem;*/
                 margin-left: .5rem;
                 font-size: 1rem;
             }
@@ -292,7 +290,6 @@
         max-width: 1000px;
         height: 100%;
         max-height: 400px;
-        /*-o-object-fit: cover;*/
         object-fit: contain;
         position: absolute;
         top: 0;

@@ -1,4 +1,3 @@
-
 <template>
     <header>
         <div class="container">
@@ -42,9 +41,7 @@
 <script>
     export default {
         data() {
-            return {
-
-            }
+            return {}
         },
         methods: {
             toggleMenuList() {
@@ -66,14 +63,17 @@
     %standart {
         width: 100%;
     }
+
     %align_horisontal {
         display: flex;
         justify-content: center;
     }
+
     %align_vertical {
         display: flex;
         align-items: center;
     }
+
     header {
         width: 100%;
         position: fixed;
@@ -96,6 +96,7 @@
         justify-content: space-between;
         position: relative;
     }
+
     .logo {
         width: 100%;
         max-width: 150px;
@@ -116,7 +117,7 @@
 
     .menu_list {
         transition: 1s;
-        transform-origin:top;
+        transform-origin: top;
         @extend %standart;
         display: flex;
         justify-content: flex-end;
@@ -124,6 +125,7 @@
         margin-left: 50px;
         margin-right: 20px;
         z-index: 11;
+
         ul {
             width: 100%;
             display: flex;
@@ -137,25 +139,26 @@
 
                 margin-left: 10px;
                 position: relative;
+
                 a {
                     text-decoration: none;
                     color: #272727;
-                    // color: red;
                     font-family: Poppins;
                     font-size: 18px;
                     font-weight: 500;
                     line-height: 27px;
+
                     &::after {
                         position: absolute;
                         content: "";
                         left: 0;
                         bottom: 0;
-                        // float: left;
                         width: 0px;
                         transition: 1s;
                         background-color: #e4360c;
                         height: 2px;
                     }
+
                     &:hover {
                         &::after {
                             width: 100%;
@@ -166,18 +169,21 @@
             }
         }
     }
+
     .my_ham {
         display: none;
         margin-right: 50px;
         cursor: pointer;
 
-        /* GENERAL STYLES */
         .visuallyHidden {
             position: absolute;
             overflow: hidden;
             clip: rect(0 0 0 0);
-            height: 1px; width: 1px;
-            margin: -1px; padding: 0; border: 0;
+            height: 1px;
+            width: 1px;
+            margin: -1px;
+            padding: 0;
+            border: 0;
         }
 
         h1 {
@@ -186,7 +192,6 @@
 
         .hamburger {
             margin: 0 auto;
-            // margin-top: 30px;
             width: 30px;
             height: 30px;
             position: relative;
@@ -220,8 +225,8 @@
         .bar4 {
             bottom: 0;
         }
-        /* HAMBURGER 4 */
 
+        /* HAMBURGER 4 */
         .hamburger2 .bar2,
         .hamburger3 .bar3,
         .hamburger4 .bar4 {
@@ -248,28 +253,28 @@
 
         }
 
-        .checkbox4:checked + label > .hamburger4 > .bar1{
+        .checkbox4:checked + label > .hamburger4 > .bar1 {
             top: 13.5px;
             background-color: transparent;
         }
 
-        .checkbox4:checked + label > .hamburger4 > .bar2{
+        .checkbox4:checked + label > .hamburger4 > .bar2 {
             left: 0px;
             width: 30px;
             transform: rotate(45deg);
         }
 
-        .checkbox4:checked + label > .hamburger4 > .bar3{
+        .checkbox4:checked + label > .hamburger4 > .bar3 {
             left: 0;
             width: 30px;
             transform: rotate(-45deg);
         }
 
-        .checkbox4:checked + label > .hamburger4 > .bar4{
+        .checkbox4:checked + label > .hamburger4 > .bar4 {
             background-color: transparent;
         }
 
-        .checkbox4:checked + label > .hamburger4 > .bar5{
+        .checkbox4:checked + label > .hamburger4 > .bar5 {
             bottom: 13.5px;
             background-color: transparent;
         }
@@ -280,17 +285,18 @@
             overflow: hidden;
             margin: 0;
             transform: scaleY(1);
-            /*height: calc(180px);*/
             background-color: #fff;
             position: absolute;
             width: 100%;
             left: 0;
-            top:75px;
+            top: 75px;
             align-items: stretch;
+
             ul {
                 flex-direction: column;
                 align-items: center;
             }
+
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
         }
         .my_ham {
@@ -298,8 +304,7 @@
         }
         .hide_list {
             transform: scaleY(0) !important;
-            transform-origin:top;
-            /*transition: .5s;*/
+            transform-origin: top;
         }
     }
 

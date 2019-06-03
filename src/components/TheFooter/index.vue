@@ -7,13 +7,13 @@
             <div class="contacts">
                 <div class="phone">
                     <p>
-                        <!--Phone number:--> +380969913191
+                        +380969913191
                     </p>
                 </div>
                 <div class="email">
-                   <p>
-                       <!--Email:--> 2pi15b.gybalo@gmail.com
-                   </p>
+                    <p>
+                        2pi15b.gybalo@gmail.com
+                    </p>
                 </div>
             </div>
         </div>
@@ -44,12 +44,10 @@
     }
 
     .logo {
-        /*width: 100%;*/
         flex-grow: 1;
         padding-left: 3rem;
 
         img {
-            /*width: 100%;*/
             height: auto;
             object-fit: contain;
             max-width: 200px;
@@ -58,13 +56,13 @@
     }
 
     .contacts {
-        /*width: 100%;*/
         flex-grow: 3;
-        font-family: Calibri;
+        font-family: Calibri, sans-serif;
         font-size: 1.1rem;
         display: flex;
         justify-content: space-around;
     }
+
     .phone {
         color: rgb(53, 73, 94)
     }
@@ -73,7 +71,7 @@
         color: rgb(65, 184, 131);
     }
 
-    @media screen and (max-width: 590px){
+    @media screen and (max-width: 590px) {
         .contacts {
             flex-direction: column;
         }

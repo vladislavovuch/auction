@@ -3,9 +3,9 @@
         <base-slider
             :autoPlay="3000"
         >
-            <img src="../../assets/brandson.jpg" alt="">
-            <img src="../../assets/true_story.jpg" alt="">
-            <img src="../../assets/stages.jpg" alt="">
+            <img src="../../assets/brandson.jpg" alt="brandson">
+            <img src="../../assets/true_story.jpg" alt="true story">
+            <img src="../../assets/stages.jpg" alt="stages">
         </base-slider>
     </div>
 </template>
@@ -23,7 +23,6 @@
     img {
         width: 100%;
         height: 100%;
-        /*object-fit: cover;*/
         max-width: 100%;
         max-height: 100%;
         object-fit: contain;

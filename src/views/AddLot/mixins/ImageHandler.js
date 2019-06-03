@@ -73,23 +73,6 @@ export default {
             const canceled = await this.cancelRequest(index);
             if (!canceled) {
                 if (this.lot.imagesList[index] === undefined) {
-                    /* console.log('Start watch');
-                     const unwatch = this.$watch(this.lot.imagesList,
-                         (newVal, oldVal) => {
-
-                             if (newVal) {
-                                 console.log(newVal);
-                                 const payload = {
-                                     name: this.lot.imagesList[index].name,
-                                     uuid: this.lot.id,
-                                 };
-                                 console.log('Delete after time');
-                                 this.$store.dispatch('deleteImage', payload);
-                                 this.lot.imagesList.splice(index, 1);
-                                 unwatch();
-                             }
-
-                         })*/
                     console.log('Cant cancel, try later');
                     return;
                 } else {
