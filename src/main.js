@@ -4,11 +4,11 @@ import router from './router'
 import store from './store/store'
 import VeeValidate from 'vee-validate';
 
-// Vue.use(VeeValidate);
 Vue.use(VeeValidate, {
     // dictionary,
     events: 'blur'
 });
+
 import firebase from './configs/Firebase'
 
 Vue.config.productionTip = false;

@@ -1,5 +1,4 @@
 <template>
-    <!--index can cause some problems during filtering or sorting-->
     <div class="lot_preview" :id="lot.id">
         <div class="lot_image">
             <img :src="lot.img.url" :alt="lot.img.name"/>
@@ -49,8 +48,8 @@
         justify-content: center;
         transition: .3s;
         cursor: pointer;
-        &:hover {
 
+        &:hover {
             border-color: #89c202;
             -webkit-box-shadow: 0px 0px 13px 0px #a8a8a8;
             -moz-box-shadow: 0px 0px 13px 0px #a8a8a8;
@@ -66,7 +65,6 @@
 
     .lot_image {
         width: 100%;
-        /*padding-right: 1rem;*/
         display: flex;
         align-items: center;
         overflow: hidden;
@@ -123,13 +121,9 @@
     }
 
     .author {
-        /*display: none;*/
         padding: 1rem 0;
         text-align: center;
-        /*width: 100%;*/
-        // margin-left: -1rem;
         z-index: 2;
-        /*opacity: 0;*/
         background-color: #fff;
     }
 </style>

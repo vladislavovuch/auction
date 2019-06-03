@@ -86,10 +86,8 @@
             max-width: 17rem;
             font-size: 1rem;
             padding: .1rem;
-            /*line-height: 1em;*/
             height: 5rem;
             resize: vertical;
-            /*min-width: 10rem;*/
             max-height: 25rem;
             min-height: 2rem;
         }

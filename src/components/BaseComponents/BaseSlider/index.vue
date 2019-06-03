@@ -76,9 +76,7 @@
             Vnodes: {
                 functional: true,
                 render: function (createElement, context) {
-                    console.log(context);
                     const src = context.props.vnodes.data.attrs.src;
-                    console.log(context.props.vnodes.data.attrs.src);
                     return createElement('img', {
                         key: context.props.id,
                         class: context.props.vnodes.data.staticClass,
@@ -86,7 +84,6 @@
                             src: src,
                         },
                     })
-                    // return `<img src="../../../assets/stages.jpg"/>`
                 }
             },
             NavigationDots,
@@ -116,6 +113,7 @@
         display: flex;
         align-items: center;
         flex-direction: column;
+
         .slider-wrap {
             display: flex;
             width: 100%;
@@ -154,7 +152,6 @@
 
         .slider-content-enter {
             opacity: 0;
-            /*transform: translateX(100%);*/
         }
 
         .slider-content-enter-to {
@@ -168,17 +165,16 @@
 
         .slider-content-leave-to {
             opacity: 0;
-            /*transform: translateX(-100%);*/
         }
 
         $time: 0.5s;
+
         .slider-content-leave-active {
             -webkit-transition: all $time linear;
             -moz-transition: all $time linear;
             -ms-transition: all $time linear;
             -o-transition: all $time linear;
             transition: all $time linear;
-            /*opacity: 0;*/
         }
 
         .slider-content-enter-active {
@@ -189,8 +185,6 @@
             transition: all $time linear;
         }
     }
-
-
 
 
 </style>

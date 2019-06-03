@@ -10,9 +10,9 @@
         </base-input>
 
         <base-select
-            :list="filteredList"
-            v-model="filteredProp"
-            class="filter"
+                :list="filteredList"
+                v-model="filteredProp"
+                class="filter"
         >
             Select sorted property
         </base-select>
@@ -26,6 +26,7 @@
                 ></lot-preview>
             </div>
             <base-pagination
+                    v-if="sortedLots.length !== 0"
                     class="preview-pagination"
                     :total="filteredLots.length"
                     :numberPerPage="numberPerPage"
@@ -88,11 +89,13 @@
 
                 for (const key in lot) {
                     let prop = lot[key];
+                    // console.log(key);
                     if (key === 'img') {
-                        prop = prop.name
-                    }
 
-                    if (prop.match(regexp)) {
+                        prop = prop.name;
+                    }
+                    console.log(prop);
+                    if (String(prop).match(regexp)) {
                         return true;
                     }
                 }
@@ -102,7 +105,7 @@
                 this.currentPage = pageNum;
                 document.body.scrollIntoView({
                     behavior: "smooth",
-                    block:    "start",
+                    block: "start",
                 });
             }
         },
@@ -156,10 +159,6 @@
 </script>
 
 <style scoped lang="scss">
-    .lots-preview {
-
-    }
-
     .preview-pagination {
         width: calc(100% - 2rem);
         padding: 1rem;

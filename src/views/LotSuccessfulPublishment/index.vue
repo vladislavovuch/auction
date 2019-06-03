@@ -40,7 +40,6 @@
         img {
             width: 100%;
             max-width: 400px;
-            /*height: auto;*/
             object-fit: contain;
         }
     }

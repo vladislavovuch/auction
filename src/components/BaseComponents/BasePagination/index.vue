@@ -41,15 +41,27 @@
                 console.log(event.target);
                 const pageNum = event.target.dataset.pageNum;
                 if (pageNum !== undefined) {
-                    this.$emit('change-page', Number(pageNum));
+                   this.changePage(pageNum);
                 }
+            },
+            changePage(pageNum) {
+                this.$emit('change-page', Number(pageNum));
             }
         },
         computed: {
             pageNumbers() {
-                return Math.ceil(this.total / this.numberPerPage);
+                const pages = Math.ceil(this.total / this.numberPerPage);
+                if (pages < this.currentPage) {
+                   this.changePage(pages);
+                }
+                return pages;
             },
+        },
+        watch: {
+            pageNumbers() {
 
+
+            }
         }
     }
 </script>
@@ -66,10 +78,6 @@
         display: flex;
         list-style: none;
         justify-content: center;
-
-        li {
-
-        }
     }
 
     .nav-btn {
@@ -86,7 +94,6 @@
             color: #0056b3;
             text-decoration: none;
             background-color: #e9ecef;
-            /*border-color: #dee2e6;*/
         }
 
         &:disabled {
@@ -110,6 +117,4 @@
             background-color: #0077ee;
         }
     }
-
-
 </style>

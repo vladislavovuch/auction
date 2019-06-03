@@ -2,9 +2,7 @@
     <div id="app">
         <the-header></the-header>
         <main>
-            <!--<div class="container">-->
-                <router-view></router-view>
-            <!--</div>-->
+            <router-view></router-view>
         </main>
         <loading-indicator></loading-indicator>
         <base-modal v-if="$store.getters.isShownModal" @close="closeModalWindow">
@@ -24,7 +22,6 @@
     import BaseModal from './components/BaseComponents/BaseModal'
     import BreadCrumbs from './components/BreadCrumbs'
 
-
     export default {
         components: {
             TheHeader,
@@ -38,7 +35,6 @@
                 this.$store.commit('toggleModalWindow', {});
             },
         },
-        computed: {}
     }
 </script>
 
@@ -49,7 +45,6 @@
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
         color: #2c3e50;
-        /*padding-top: 75px;*/
         display: flex;
         flex-direction: column;
         height: 100vh;
@@ -82,7 +77,6 @@
         margin-top: 75px;
         width: 100%;
         flex: 1 0 auto;
-        /*padding-bottom: 2rem;*/
     }
 
 </style>

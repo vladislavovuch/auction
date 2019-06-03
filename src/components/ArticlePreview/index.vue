@@ -48,7 +48,6 @@
         width: calc(100% - 4rem);
         display: flex;
         align-items: center;
-        /*flex-direction: column;*/
         background-color: #fff;
         padding: 1rem;
         font-family: Calibri, serif;
@@ -58,6 +57,7 @@
         max-width: 200px;
         width: 100%;
         max-height: 100%;
+
         img {
             height: auto;
             max-height: 100%;
@@ -78,8 +78,6 @@
     }
 
     .author {
-        /*width: 100%;*/
-
         p {
             font-size: 1rem;
             font-weight: 400;
@@ -89,7 +87,6 @@
     }
 
     .date {
-
         P {
             color: #616161;
             font-size: 1rem;
@@ -120,19 +117,16 @@
 
         a {
             color: #38c695;
-            /*display: inline;*/
-            /*font-family: Poppins;*/
             font-weight: 600;
             text-decoration: none;
             transition: .3s;
-            /*font-size: 1.1rem;*/
             &:hover {
                 text-decoration: underline;
             }
         }
     }
 
-    @media screen and (max-width: 700px){
+    @media screen and (max-width: 700px) {
         .article-img {
             display: none;
         }

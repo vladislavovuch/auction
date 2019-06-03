@@ -35,10 +35,6 @@
 </script>
 
 <style scoped lang="scss">
-    .image-upload {
-
-    }
-
     .img-upload {
         width: 100%;
         display: flex;
@@ -52,7 +48,6 @@
         border: 1px solid black;
         cursor: pointer;
         overflow: hidden;
-        /*max-width: 120px;*/
         -webkit-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
@@ -69,7 +64,6 @@
             outline: none;
             background: #fff;
             cursor: inherit;
-            /*display: block;*/
         }
 
         &:hover {
@@ -86,6 +80,5 @@
         &:hover {
             background-color: #f7f7f7;
         }
-
     }
 </style>

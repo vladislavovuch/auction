@@ -7,12 +7,10 @@
                         <slot name="header">
                         </slot>
                     </div>
-
                     <div class="modal-body">
                         <slot>
                         </slot>
                     </div>
-
                     <div class="modal-footer">
                         <slot name="footer">
                             <base-button class="modal-default-button" @click="$emit('close')">

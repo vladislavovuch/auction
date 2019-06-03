@@ -20,7 +20,7 @@
         },
         computed: {
             list() {
-                return this.$route.matched.filter((item, i, arr) => {
+                return this.$route.matched.filter(item => {
                     return item.name != undefined;
                 });
             }
@@ -45,13 +45,14 @@
         li {
             display: inline-block;
             cursor: pointer;
-            -webkit-transition: all  $time;
-            -moz-transition: all  $time;
-            -ms-transition: all  $time;
-            -o-transition: all  $time;
-            transition: all  $time;
+            -webkit-transition: all $time;
+            -moz-transition: all $time;
+            -ms-transition: all $time;
+            -o-transition: all $time;
+            transition: all $time;
             text-decoration: none;
             color: #007bff;
+
             &:hover {
                 color: #0062c4;
                 text-decoration: underline;
@@ -69,11 +70,9 @@
                 cursor: default;
                 text-decoration: none;
                 color: #6c757d;
+
                 &:after {
                     content: '';
-                }
-                :hover {
-                    /*text-decoration: none;*/
                 }
             }
         }

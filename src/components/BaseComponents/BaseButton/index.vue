@@ -28,6 +28,5 @@
         &:hover {
             background-color: rgb(59, 165, 117);
         }
-
     }
 </style>
