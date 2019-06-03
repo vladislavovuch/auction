@@ -4,7 +4,7 @@
              <span :class="{'upload-btn': true, 'disabled': disabled}"
                    :title="max ? `Max image number - ${max}` : 'You can upload more photos'">
                  Upload image
-                 <input id="file" type="file" accept="image/*" @input="uploadImage" :disabled="disabled">
+                 <input id="file" type="file" accept="image/*" @change="uploadImage" :disabled="disabled">
             </span>
         </div>
     </div>
@@ -59,24 +59,17 @@
         user-select: none;
 
         input {
+            float: left;
             position: absolute;
             top: 0;
             right: 0;
             min-width: 100%;
             min-height: 100%;
-            font-size: 100px;
-            text-align: right;
-            /*filter: alpha(opacity=0);*/
             opacity: 0;
             outline: none;
             background: #fff;
             cursor: inherit;
-            display: block;
-            -webkit-transition: all .3s;
-            -moz-transition: all .3s;
-            -ms-transition: all .3s;
-            -o-transition: all .3s;
-            transition: all .3s;
+            /*display: block;*/
         }
 
         &:hover {
