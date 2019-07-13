@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - "node"
+install:
+  - npm install
+script:
+  - npm run build
+deploy:
+  provider: firebase
+  token:
+    secure: "1/nd_md78S9K_fixtPWLF_wu9WJg6A0patNFoCjG9kSkkcLZrvre5GoyZzKya4XI5p"
+  project: "auction"

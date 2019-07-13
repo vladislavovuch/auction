@@ -35,6 +35,10 @@
                 this.$store.commit('toggleModalWindow', {});
             },
         },
+        mounted() {
+            console.log("You are fantastic!!!");
+            console.log('Enjoy authomatic deployment:))');
+        }
     }
 </script>
 
