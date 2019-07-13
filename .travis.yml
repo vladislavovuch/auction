@@ -9,4 +9,4 @@ deploy:
   provider: firebase
   token:
     secure: "1/146bBEDXA97WZfGOmx6VZG15f4J0gh4jytudCJmFZXRE3YDi0cZ6hIkgTS6GdSOD"
-  project: "sp"
+  project: "auction"
