@@ -88,13 +88,11 @@
                 const regexp = new RegExp(str, 'i');
 
                 for (const key in lot) {
-                    let prop = lot[key];
-                    // console.log(key);
-                    if (key === 'img') {
 
+                    let prop = lot[key];
+                    if (key === 'img') {
                         prop = prop.name;
                     }
-                    console.log(prop);
                     if (String(prop).match(regexp)) {
                         return true;
                     }

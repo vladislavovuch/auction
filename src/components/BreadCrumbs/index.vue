@@ -20,9 +20,7 @@
         },
         computed: {
             list() {
-                return this.$route.matched.filter(item => {
-                    return item.name != undefined;
-                });
+                return this.$route.matched.filter(item => item.name);
             }
         }
     }
