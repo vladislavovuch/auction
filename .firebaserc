@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "auction-a1976"
+    "default": "auction-a1976",
+    "auction": "auction-89233",
+    "st": "auction-a1976"
   }
 }
