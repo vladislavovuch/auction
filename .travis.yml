@@ -8,5 +8,5 @@ script:
 deploy:
   provider: firebase
   token:
-    secure: "1/nd_md78S9K_fixtPWLF_wu9WJg6A0patNFoCjG9kSkkcLZrvre5GoyZzKya4XI5p"
+    secure: "1/146bBEDXA97WZfGOmx6VZG15f4J0gh4jytudCJmFZXRE3YDi0cZ6hIkgTS6GdSOD"
   project: "auction"
